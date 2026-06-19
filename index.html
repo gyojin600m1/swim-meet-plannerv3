@@ -1,0 +1,1217 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Swim Meet Day Planner</title>
+  <style>
+    :root {
+      --bg: #f4efe6;
+      --paper: rgba(255, 250, 243, 0.88);
+      --panel: rgba(255, 255, 255, 0.72);
+      --ink: #1f2a2e;
+      --muted: #58656a;
+      --line: rgba(31, 42, 46, 0.12);
+      --sea: #0f6d7a;
+      --sun: #ffb11b;
+      --coral: #e6674e;
+      --mint: #68b39f;
+      --shadow: 0 18px 48px rgba(44, 57, 64, 0.12);
+      --radius: 22px;
+
+      /* category colors */
+      --c-base: #6b7780;
+      --c-fuel: #d98324;
+      --c-activation: #8a6d3b;
+      --c-pool: #0f6d7a;
+      --c-focus: #7b4fb5;
+      --c-race: #e6674e;
+      --c-recovery: #68b39f;
+      --c-between: #4f86c6;
+      --c-condition: #c44b6e;
+      --c-memo: #58656a;
+      --c-schedule: #5a6b2f;
+      --c-official: #2f6b6b;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Hiragino Sans", "Yu Gothic", sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(255, 177, 27, 0.28), transparent 28%),
+        radial-gradient(circle at top right, rgba(104, 179, 159, 0.22), transparent 24%),
+        linear-gradient(180deg, #fbf6ee 0%, #f4efe6 100%);
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+      background-size: 28px 28px;
+      opacity: 0.4;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 28px));
+      margin: 20px auto 40px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero, .panel, .result-card, .tip-card, .race-row {
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .hero {
+      background: linear-gradient(145deg, rgba(15, 109, 122, 0.94), rgba(8, 58, 76, 0.92));
+      color: #f8fbfc;
+      border-radius: 30px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      right: -50px;
+      top: -30px;
+      width: 220px;
+      height: 220px;
+      background: radial-gradient(circle, rgba(255, 177, 27, 0.34), transparent 66%);
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.12);
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 14px 0 12px;
+      font-size: clamp(30px, 5vw, 54px);
+      line-height: 1.04;
+      letter-spacing: -0.03em;
+      max-width: 10.5em;
+    }
+
+    .hero p {
+      margin: 0;
+      max-width: 760px;
+      color: rgba(248, 251, 252, 0.84);
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.35fr 0.85fr;
+      gap: 20px;
+      align-items: end;
+    }
+
+    .hero-note {
+      background: rgba(255, 255, 255, 0.11);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .hero-note strong { display: block; margin-bottom: 8px; font-size: 14px; }
+
+    .hero-note ul {
+      margin: 0;
+      padding-left: 18px;
+      color: rgba(248, 251, 252, 0.82);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: minmax(340px, 420px) minmax(0, 1fr);
+      gap: 18px;
+      margin-top: 18px;
+      align-items: start;
+    }
+
+    .panel {
+      background: var(--paper);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 22px;
+    }
+
+    .panel h2, .results h2 {
+      margin: 0 0 6px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
+    }
+
+    .sub {
+      margin: 0 0 18px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    .field-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .field { display: grid; gap: 7px; margin-bottom: 12px; }
+
+    label, .field span {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #425257;
+    }
+
+    input, select, button, textarea { font: inherit; }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid rgba(31, 42, 46, 0.12);
+      border-radius: 14px;
+      padding: 12px 13px;
+      background: rgba(255, 255, 255, 0.86);
+      color: var(--ink);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    textarea { min-height: 84px; resize: vertical; }
+
+    .race-list { display: grid; gap: 10px; margin-top: 12px; }
+
+    .race-row {
+      display: grid;
+      grid-template-columns: 1.15fr 0.8fr 0.95fr auto;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(31, 42, 46, 0.09);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.68);
+    }
+
+    .rr-field { display: grid; gap: 4px; }
+    .rr-label {
+      display: none;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: #425257;
+    }
+
+    .mini {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: -2px;
+      margin-bottom: 8px;
+    }
+
+    .button-row, .small-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 999px;
+      padding: 12px 18px;
+      cursor: pointer;
+      transition: transform 0.16s ease, box-shadow 0.16s ease, opacity 0.16s ease;
+    }
+
+    button:hover { transform: translateY(-1px); }
+
+    .primary {
+      background: linear-gradient(135deg, var(--sea), #105067);
+      color: white;
+      box-shadow: 0 12px 24px rgba(15, 109, 122, 0.24);
+    }
+
+    .secondary {
+      background: rgba(255, 255, 255, 0.84);
+      color: var(--ink);
+      border: 1px solid rgba(31, 42, 46, 0.12);
+    }
+
+    .ghost { background: rgba(230, 103, 78, 0.08); color: #9b4633; }
+
+    .remove-row {
+      align-self: center;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: 12px;
+      background: rgba(31, 42, 46, 0.06);
+      color: var(--ink);
+    }
+
+    .results { display: grid; gap: 18px; }
+
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .result-card {
+      background: var(--panel);
+      border: 1px solid rgba(255, 255, 255, 0.62);
+      box-shadow: var(--shadow);
+      border-radius: 22px;
+      padding: 18px;
+    }
+
+    .result-card strong {
+      display: block;
+      font-size: 28px;
+      margin-top: 8px;
+      letter-spacing: -0.03em;
+    }
+
+    .label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    /* warnings */
+    .warnings { display: grid; gap: 8px; }
+    .warn-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      padding: 12px 14px;
+      border-radius: 16px;
+      font-size: 13.5px;
+      line-height: 1.55;
+    }
+    .warn-item.alert {
+      background: rgba(230, 103, 78, 0.12);
+      border: 1px solid rgba(230, 103, 78, 0.28);
+      color: #8e3b27;
+    }
+    .warn-item.tip {
+      background: rgba(255, 177, 27, 0.14);
+      border: 1px solid rgba(255, 177, 27, 0.3);
+      color: #835400;
+    }
+    .warn-item.good {
+      background: rgba(104, 179, 159, 0.14);
+      border: 1px solid rgba(104, 179, 159, 0.3);
+      color: #2c6b5a;
+    }
+    .warn-item .ico { font-size: 16px; line-height: 1.4; }
+
+    .timeline { display: grid; gap: 12px; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 118px minmax(0, 1fr);
+      gap: 12px;
+      padding: 14px;
+      border-radius: 20px;
+      border: 1px solid rgba(31, 42, 46, 0.08);
+      border-left: 5px solid var(--accent, var(--c-base));
+      background: rgba(255, 255, 255, 0.7);
+    }
+
+    .time-col { display: grid; gap: 6px; align-content: start; }
+
+    .time-pill {
+      display: inline-flex;
+      justify-content: center;
+      padding: 10px 12px;
+      border-radius: 16px;
+      font-weight: 800;
+      font-size: 20px;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, rgba(255, 177, 27, 0.22), rgba(255, 177, 27, 0.08));
+      color: #825400;
+    }
+
+    .rel-pill {
+      display: inline-flex;
+      justify-content: center;
+      padding: 4px 8px;
+      border-radius: 10px;
+      font-size: 11px;
+      font-weight: 700;
+      background: rgba(31, 42, 46, 0.06);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .event-block + .event-block {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px dashed rgba(31, 42, 46, 0.12);
+    }
+
+    .timeline-item h3 { margin: 0 0 6px; font-size: 17px; }
+    .timeline-item p { margin: 0; color: var(--muted); line-height: 1.65; font-size: 14px; }
+
+    .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      background: color-mix(in srgb, var(--accent, var(--c-base)) 12%, transparent);
+      color: var(--accent, var(--c-base));
+      border: 1px solid color-mix(in srgb, var(--accent, var(--c-base)) 22%, transparent);
+    }
+
+    .tips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .tip-card {
+      background: rgba(255, 255, 255, 0.75);
+      border: 1px solid rgba(31, 42, 46, 0.08);
+      border-radius: 20px;
+      padding: 16px;
+    }
+
+    .tip-card h3 { margin: 0 0 8px; font-size: 16px; }
+    .tip-card p, .tip-card li { color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .tip-card ul { margin: 0; padding-left: 18px; }
+
+    .footer-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.7;
+    }
+
+    .save-state {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 8px;
+      min-height: 14px;
+    }
+
+    .empty {
+      padding: 28px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.62);
+      border: 1px dashed rgba(31, 42, 46, 0.18);
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(20px);
+      background: rgba(31, 42, 46, 0.92);
+      color: #fff;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      z-index: 50;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+    @media (max-width: 980px) {
+      .hero-grid, .layout, .tips-grid, .summary-strip {
+        grid-template-columns: 1fr;
+      }
+      .race-row { grid-template-columns: 1fr 1fr; }
+      .race-row .rr-field:first-child { grid-column: 1 / -1; }
+      .remove-row { width: 100%; height: 38px; align-self: end; }
+      .rr-label { display: block; }
+      .timeline-item { grid-template-columns: 1fr; }
+      .time-col { grid-auto-flow: column; align-items: center; }
+    }
+
+    @media print {
+      body { background: #fff; }
+      body::before { display: none; }
+      .hero, .panel, .tips-grid, .save-state, .small-actions, .button-row,
+      #usageCard { display: none !important; }
+      .layout { display: block; }
+      .shell { width: 100%; margin: 0; }
+      .timeline-item, .result-card, .warn-item {
+        break-inside: avoid;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-grid">
+        <div>
+          <div class="eyebrow">Swim Meet Day Planner</div>
+          <h1>大会当日の流れを、レース時刻から逆算する。</h1>
+          <p>
+            何時からアップするか、いつ補食するか、待機中にどう過ごすかを
+            時系列で整理するための大会当日用アプリです。レース時刻と大会要項を入れると、
+            朝食、補食、陸アップ、水中アップ、レース前の整え方、レース後の回復までを1日の流れで表示します。
+          </p>
+        </div>
+        <div class="hero-note">
+          <strong>使い方</strong>
+          <ul>
+            <li>大会要項の朝スケジュールを先に入力する</li>
+            <li>レース時刻を入れて当日の流れを確認する</li>
+            <li>入力は自動保存。次の大会は微調整して使い回す</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="layout">
+      <div class="panel">
+        <h2>入力</h2>
+        <p class="sub">大会要項とレース時刻を入れて、当日の流れを整理します。レースが複数ある場合は追加できます。</p>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="athleteName">選手名</label>
+            <input id="athleteName" type="text" value="サンプル選手">
+          </div>
+          <div class="field">
+            <label for="wakeTime">起床時刻</label>
+            <input id="wakeTime" type="time" value="05:45">
+          </div>
+          <div class="field">
+            <label for="arrivalTime">会場到着</label>
+            <input id="arrivalTime" type="time" value="07:00">
+          </div>
+          <div class="field">
+            <label for="stomachType">お腹の強さ</label>
+            <select id="stomachType">
+              <option value="normal">普通</option>
+              <option value="sensitive">弱め</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="weatherLoad">環境負荷</label>
+            <select id="weatherLoad">
+              <option value="normal">標準</option>
+              <option value="hot">暑い / 蒸し暑い</option>
+              <option value="cold">冷える</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <span>朝の大会要項</span>
+          <div class="mini">大会ごとに変わる朝の流れを毎回入力できるようにします。</div>
+        </div>
+
+        <div class="field-grid">
+          <div class="field">
+            <label for="openingTime">開門</label>
+            <input id="openingTime" type="time" value="07:30">
+          </div>
+          <div class="field">
+            <label for="warmupStartTime">W-UP開始</label>
+            <input id="warmupStartTime" type="time" value="07:40">
+          </div>
+          <div class="field">
+            <label for="officialStartFrom">公式スタート練習 開始</label>
+            <input id="officialStartFrom" type="time" value="08:40">
+          </div>
+          <div class="field">
+            <label for="officialStartTo">公式スタート練習 終了</label>
+            <input id="officialStartTo" type="time" value="09:00">
+          </div>
+          <div class="field">
+            <label for="warmupEndTime">W-UP終了</label>
+            <input id="warmupEndTime" type="time" value="09:05">
+          </div>
+          <div class="field">
+            <label for="poolWarmup">水中アップ環境</label>
+            <select id="poolWarmup">
+              <option value="yes">しっかり取れる</option>
+              <option value="limited">短い / 混む</option>
+              <option value="no">ほぼ取れない</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="laneNote">レーン運用メモ</label>
+          <textarea id="laneNote" placeholder="例: 7:40-8:35は0レーンダッシュ、1-8アップ、9レーンペース / 8:40-9:00は1-8公式スタート練習"></textarea>
+        </div>
+
+        <div class="field">
+          <label for="notes">個別メモ</label>
+          <textarea id="notes" placeholder="例: 100mの前はバナナ半分が合う / 午後は眠くなりやすい / ゴーグルは2本持つ"></textarea>
+        </div>
+
+        <div class="field">
+          <span>レース一覧</span>
+          <div class="mini">種目名、時刻、負荷感でざっくり逆算します。</div>
+          <div id="raceList" class="race-list"></div>
+        </div>
+
+        <div class="small-actions" style="margin-bottom: 14px;">
+          <button class="secondary" id="addRace">レースを追加</button>
+          <button class="secondary" id="loadSample">サンプル読込</button>
+        </div>
+
+        <div class="button-row">
+          <button class="primary" id="generatePlan">プラン生成</button>
+          <button class="ghost" id="resetForm">リセット</button>
+        </div>
+
+        <div class="save-state" id="saveState"></div>
+
+        <p class="footer-note">
+          注意: このアプリは医療行為ではありません。アレルギー、体重管理、既往歴、体調不良、減量、
+          サプリ使用は保護者・コーチ・管理栄養士・医療職と確認して調整してください。
+        </p>
+      </div>
+
+      <div class="results">
+        <div class="result-card" id="usageCard">
+          <h2>使い方の目安</h2>
+          <p class="sub" style="margin-bottom: 0;">
+            まず大会要項の朝スケジュールを入力し、そのあとにレース時刻を入れてください。
+            1本目までの流れ、レース間のつなぎ、最終レース後の回復までを一画面で確認できます。
+            入力内容はこのブラウザに自動保存されます。
+          </p>
+        </div>
+
+        <div id="summaryStrip" class="summary-strip"></div>
+
+        <div id="warningsWrap" class="result-card" style="display:none;">
+          <h2>チェック</h2>
+          <p class="sub" style="margin-bottom: 14px;">逆算した時刻のうち、当日に注意したい点です。</p>
+          <div id="warnings" class="warnings"></div>
+        </div>
+
+        <div id="timelineWrap" class="result-card">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap;">
+            <h2 style="margin-bottom:0;">タイムライン</h2>
+            <div class="small-actions">
+              <button class="secondary" id="copyPlan">テキストでコピー</button>
+              <button class="secondary" id="printPlan">印刷 / PDF</button>
+            </div>
+          </div>
+          <div id="timeline" class="timeline" style="margin-top:14px;">
+            <div class="empty">左の入力から「プラン生成」を押すと、当日の流れがここに出ます。</div>
+          </div>
+        </div>
+
+        <div class="tips-grid">
+          <div class="tip-card">
+            <h3>ジュニア向け食事の基本</h3>
+            <ul>
+              <li>試合前は、脂っこい物や食物繊維が多すぎる物を詰め込みすぎない</li>
+              <li>主食系を軸にして、消化しやすい物を少量ずつ入れる</li>
+              <li>例: おにぎり、バナナ、ゼリー、カステラ、パン、うどん、ヨーグルト</li>
+              <li>長い空き時間は、お菓子だけでつながず、重すぎない主食寄りの食事も候補</li>
+            </ul>
+          </div>
+          <div class="tip-card">
+            <h3>待機中の基本</h3>
+            <ul>
+              <li>座りっぱなしで固まりすぎない</li>
+              <li>冷え対策と暑さ対策を分けて考える</li>
+              <li>スマホで気が散りすぎるなら使用時間に線を引く</li>
+              <li>次レースが近い時は、会話よりも呼吸と感覚の確認を優先</li>
+            </ul>
+          </div>
+          <div class="tip-card">
+            <h3>陸アップ / チューブ</h3>
+            <p>
+              水中アップが短い会場ほど、陸で肩甲帯・股関節・体幹を先に起こす価値が上がります。
+              ただし大会当日に新メニューは入れず、練習で使っている動きだけに絞る前提です。
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>朝の大会要項の入れ方</h3>
+            <p>
+              開門、W-UP開始、公式スタート練習、W-UP終了は大会ごとに変わります。
+              要項どおりに入力しておくと、1本目までの流れを崩しにくくなります。
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>食事アドバイスの根拠</h3>
+            <p>
+              サプリを主役にせず、普段から試した食事と補食を中心に組む考え方で作っています。
+              スポーツ栄養の基本を土台にしつつ、ジュニア向けなので言い切りすぎず、
+              「消化しやすい主食寄り」「大会当日に初めての物を入れない」を強めに置いています。
+            </p>
+          </div>
+          <div class="tip-card">
+            <h3>コピー / 印刷の使い方</h3>
+            <p>
+              「テキストでコピー」でLINEやメモに当日の流れを貼れます。
+              「印刷 / PDF」でタイムラインだけを紙やPDFに出せるので、会場に持ち込めます。
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <template id="raceRowTemplate">
+    <div class="race-row">
+      <div class="rr-field">
+        <span class="rr-label">種目名</span>
+        <input type="text" data-role="name" placeholder="例: 100m自由形 予選">
+      </div>
+      <div class="rr-field">
+        <span class="rr-label">時刻</span>
+        <input type="time" data-role="time" value="09:30">
+      </div>
+      <div class="rr-field">
+        <span class="rr-label">負荷</span>
+        <select data-role="type">
+          <option value="sprint">短距離寄り (50-100)</option>
+          <option value="middle">中距離寄り (200-400)</option>
+          <option value="distance">長距離寄り (800+)</option>
+        </select>
+      </div>
+      <button class="remove-row" type="button" title="削除">×</button>
+    </div>
+  </template>
+
+  <script>
+    const STORAGE_KEY = "swimMeetPlanner.v2";
+    const raceList = document.getElementById("raceList");
+    const raceTemplate = document.getElementById("raceRowTemplate");
+    const summaryStrip = document.getElementById("summaryStrip");
+    const timeline = document.getElementById("timeline");
+    const warningsWrap = document.getElementById("warningsWrap");
+    const warningsEl = document.getElementById("warnings");
+    const saveStateEl = document.getElementById("saveState");
+    const toastEl = document.getElementById("toast");
+
+    const FIELD_IDS = [
+      "athleteName", "wakeTime", "arrivalTime", "stomachType", "weatherLoad",
+      "openingTime", "warmupStartTime", "officialStartFrom", "officialStartTo",
+      "warmupEndTime", "poolWarmup", "laneNote", "notes"
+    ];
+
+    const FORM_DEFAULTS = {
+      athleteName: "サンプル選手", wakeTime: "05:45", arrivalTime: "07:00",
+      stomachType: "normal", weatherLoad: "normal", openingTime: "07:30",
+      warmupStartTime: "07:40", officialStartFrom: "08:40", officialStartTo: "09:00",
+      warmupEndTime: "09:05", poolWarmup: "yes", laneNote: "", notes: ""
+    };
+
+    const defaults = [
+      { name: "50m自由形", time: "09:42", type: "sprint" },
+      { name: "100mバタフライ", time: "14:18", type: "middle" }
+    ];
+
+    let lastPlan = null;
+
+    function createRaceRow(data = {}) {
+      const row = raceTemplate.content.firstElementChild.cloneNode(true);
+      row.querySelector('[data-role="name"]').value = data.name || "";
+      row.querySelector('[data-role="time"]').value = data.time || "09:30";
+      row.querySelector('[data-role="type"]').value = data.type || "sprint";
+      row.querySelector(".remove-row").addEventListener("click", () => {
+        row.remove();
+        saveState();
+      });
+      row.querySelectorAll("input, select").forEach((el) => {
+        el.addEventListener("change", saveState);
+      });
+      raceList.appendChild(row);
+    }
+
+    function loadDefaults() {
+      raceList.innerHTML = "";
+      defaults.forEach(createRaceRow);
+    }
+
+    function readRaceRows() {
+      return [...raceList.querySelectorAll(".race-row")].map((row) => ({
+        name: row.querySelector('[data-role="name"]').value,
+        time: row.querySelector('[data-role="time"]').value,
+        type: row.querySelector('[data-role="type"]').value
+      }));
+    }
+
+    /* ---------- persistence ---------- */
+    function saveState() {
+      const state = { fields: {}, races: readRaceRows() };
+      FIELD_IDS.forEach((id) => { state.fields[id] = document.getElementById(id).value; });
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+        const t = new Date();
+        const hh = String(t.getHours()).padStart(2, "0");
+        const mm = String(t.getMinutes()).padStart(2, "0");
+        saveStateEl.textContent = `入力を保存しました（${hh}:${mm}）`;
+      } catch (e) {
+        saveStateEl.textContent = "保存できませんでした（ブラウザ設定をご確認ください）";
+      }
+    }
+
+    function loadState() {
+      let state = null;
+      try {
+        state = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      } catch (e) { state = null; }
+
+      if (!state || !state.fields) {
+        loadDefaults();
+        return false;
+      }
+      FIELD_IDS.forEach((id) => {
+        if (state.fields[id] !== undefined) document.getElementById(id).value = state.fields[id];
+      });
+      raceList.innerHTML = "";
+      const races = (state.races && state.races.length) ? state.races : defaults;
+      races.forEach(createRaceRow);
+      saveStateEl.textContent = "前回の入力を読み込みました";
+      return true;
+    }
+
+    /* ---------- time helpers ---------- */
+    function timeToMinutes(value) {
+      if (!value) return null;
+      const [hours, minutes] = value.split(":").map(Number);
+      return hours * 60 + minutes;
+    }
+
+    function minutesToTime(total) {
+      const normalized = ((total % 1440) + 1440) % 1440;
+      const hours = String(Math.floor(normalized / 60)).padStart(2, "0");
+      const minutes = String(normalized % 60).padStart(2, "0");
+      return `${hours}:${minutes}`;
+    }
+
+    function pushEvent(events, time, title, detail, category, relative) {
+      events.push({ time, title, detail, category, relative: relative || null });
+    }
+
+    function raceProfile(type) {
+      if (type === "distance") return { poolLead: 55, dryLead: 70, preSnackLead: 95, preRoomLead: 25 };
+      if (type === "middle") return { poolLead: 48, dryLead: 60, preSnackLead: 90, preRoomLead: 22 };
+      return { poolLead: 42, dryLead: 52, preSnackLead: 80, preRoomLead: 18 };
+    }
+
+    function foodExamples(stomachType) {
+      if (stomachType === "sensitive") {
+        return "例: バナナ半分、ゼリー、少量のパン、おにぎり小1個、薄めのスポーツドリンク。";
+      }
+      return "例: おにぎり、バナナ、ゼリー、カステラ、パン、ヨーグルト、うどん。";
+    }
+
+    /* ---------- plan ---------- */
+    function generatePlan() {
+      saveState();
+
+      const athleteName = document.getElementById("athleteName").value.trim() || "選手";
+      const wakeTime = timeToMinutes(document.getElementById("wakeTime").value);
+      const arrivalTime = timeToMinutes(document.getElementById("arrivalTime").value);
+      const openingTime = timeToMinutes(document.getElementById("openingTime").value);
+      const warmupStartTime = timeToMinutes(document.getElementById("warmupStartTime").value);
+      const officialStartFrom = timeToMinutes(document.getElementById("officialStartFrom").value);
+      const officialStartTo = timeToMinutes(document.getElementById("officialStartTo").value);
+      const warmupEndTime = timeToMinutes(document.getElementById("warmupEndTime").value);
+      const poolWarmup = document.getElementById("poolWarmup").value;
+      const stomachType = document.getElementById("stomachType").value;
+      const weatherLoad = document.getElementById("weatherLoad").value;
+      const laneNote = document.getElementById("laneNote").value.trim();
+      const notes = document.getElementById("notes").value.trim();
+
+      const races = readRaceRows()
+        .map((r) => ({ name: r.name.trim(), time: timeToMinutes(r.time), type: r.type }))
+        .filter((race) => race.name && race.time !== null)
+        .sort((a, b) => a.time - b.time);
+
+      if (!races.length) {
+        resetSummary();
+        warningsWrap.style.display = "none";
+        return;
+      }
+
+      const firstRace = races[0];
+      const lastRace = races[races.length - 1];
+      const events = [];
+      const warnings = [];
+
+      const addWarn = (level, text) => warnings.push({ level, text });
+
+      const breakfastLead = firstRace.time - wakeTime >= 210 ? 210 : 150;
+      const breakfastTime = Math.max(wakeTime + 20, firstRace.time - breakfastLead);
+      const breakfastText = breakfastLead >= 180
+        ? "主食中心の朝食。脂質と食べ過ぎを抑えて、会場で焦って食べ足さない土台を作る。"
+        : "朝食の時間が短い日。量を欲張らず、消化しやすい主食中心で軽めに入れる。";
+
+      pushEvent(events, wakeTime, `${athleteName} 起床`,
+        "まず水分を少し入れて、体温と頭を起こす。眠気が強い日は、朝一で動きすぎず段階的に起こす。", "base");
+
+      pushEvent(events, breakfastTime, "朝食",
+        `${breakfastText} ${foodExamples(stomachType)}`, "fuel");
+
+      pushEvent(events, arrivalTime, "会場到着・場所作り",
+        "荷物の置き場、招集、アップ動線、トイレ、補食の位置を先に確認。迷う時間を減らす。", "base");
+
+      if (openingTime !== null) {
+        pushEvent(events, openingTime, "開門",
+          "入場開始。場所取り、導線確認、トイレ、荷物、招集位置を早めに把握して慌てない。", "schedule");
+      }
+      if (warmupStartTime !== null) {
+        pushEvent(events, warmupStartTime, "全体W-UP開始",
+          "大会要項どおりの全体アップ開始。最初は焦らず水慣れから入って、混雑時は接触に注意する。", "pool");
+      }
+      if (laneNote && warmupStartTime !== null) {
+        pushEvent(events, warmupStartTime + 1, "朝のレーン運用メモ", laneNote, "schedule");
+      }
+      if (officialStartFrom !== null && officialStartTo !== null) {
+        pushEvent(events, officialStartFrom, "公式スタート練習",
+          `${minutesToTime(officialStartFrom)}〜${minutesToTime(officialStartTo)}。飛び込み確認、スタート感覚、ダッシュレーンの流れをここで合わせる。`, "official");
+      }
+      if (warmupEndTime !== null) {
+        pushEvent(events, warmupEndTime, "全体W-UP終了",
+          "退水後はすぐ保温。ここからは冷えやすいので、着替えと待機の質がかなり大事になる。", "pool");
+      }
+
+      if (weatherLoad === "hot") {
+        pushEvent(events, arrivalTime + 10, "暑さ対策スタート",
+          "一気飲みではなく、こまめな水分と塩分を意識。日陰、冷却、着替えもセットで考える。", "condition");
+      }
+      if (weatherLoad === "cold") {
+        pushEvent(events, arrivalTime + 10, "冷え対策スタート",
+          "濡れたまま放置しない。足元と上着を優先して、待機中に体温を落としすぎない。", "condition");
+      }
+
+      races.forEach((race, index) => {
+        const profile = raceProfile(race.type);
+        const rel = (lead) => `${race.name} -${lead}分`;
+        const useMorningWarmupForFirstRace = index === 0 && warmupEndTime !== null
+          && warmupEndTime < race.time && race.time - warmupEndTime <= 120;
+        const poolLead = useMorningWarmupForFirstRace
+          ? null
+          : poolWarmup === "yes" ? profile.poolLead : poolWarmup === "limited" ? profile.poolLead - 10 : null;
+        const dryLead = poolWarmup === "no" ? profile.dryLead + 10 : profile.dryLead;
+        const nextRace = races[index + 1];
+
+        pushEvent(events, race.time - profile.preSnackLead, `${race.name} 前の補食`,
+          `食べ過ぎず、主食寄りで少量。お腹が弱い日はさらに軽くする。 ${foodExamples(stomachType)}`,
+          "fuel", rel(profile.preSnackLead));
+
+        pushEvent(events, race.time - dryLead, `${race.name} 前の陸アップ / チューブ`,
+          "肩・背中・股関節・体幹を起こす。大会当日に新しい動きを入れず、練習で使っている流れだけに絞る。",
+          "activation", rel(dryLead));
+
+        if (useMorningWarmupForFirstRace) {
+          pushEvent(events, warmupEndTime + 5, `${race.name} までのつなぎ`,
+            "朝の全体W-UPを使った前提。退水後は保温、補食、着替え、呼吸の整理を優先して、感覚を切らさない。", "between");
+        }
+
+        if (poolLead !== null) {
+          pushEvent(events, race.time - poolLead, `${race.name} 前の水中アップ`,
+            poolWarmup === "limited"
+              ? "時間が短い前提。泳ぐ量より、感覚を外さないことを優先。最後にレースペース寄りの刺激を少し入れる。"
+              : "長く泳ぎすぎず、心拍・感覚・ストロークの噛み合いを作る。終わり方まで含めてルーティン化する。",
+            "pool", rel(poolLead));
+        }
+
+        pushEvent(events, race.time - profile.preRoomLead, `${race.name} 直前の整え`,
+          "招集、ゴーグル、キャップ、呼吸、レースプラン確認。ここでは情報を増やしすぎず、やることを絞る。",
+          "focus", rel(profile.preRoomLead));
+
+        pushEvent(events, race.time, race.name,
+          "レース本番。終わったら感覚を短くメモできると次に活きる。", "race", "0分");
+
+        pushEvent(events, race.time + 15, `${race.name} 後の回復`,
+          nextRace && nextRace.time - race.time < 150
+            ? "次レースが近い。がっつり食べず、水分と補食でつなぐ。必要なら軽いクールダウンと着替えで整える。"
+            : "次まで空くなら、水分と主食寄りの補給を早めに戻す。可能なら軽いクールダウンも検討。",
+          "recovery", `${race.name} +15分`);
+
+        if (nextRace) {
+          const gap = nextRace.time - race.time;
+          if (gap >= 210) {
+            pushEvent(events, race.time + 75, "長い待機時間の使い方",
+              "ここは軽食ではなく、重すぎない食事も候補。食べたら座りっぱなしを避け、少し体を戻す時間も残す。", "between");
+          } else if (gap >= 90) {
+            pushEvent(events, race.time + 45, "次レースまでのつなぎ",
+              "補食、水分、着替え、深呼吸。スマホで消耗しすぎず、眠気やだるさを作らない。", "between");
+          } else {
+            pushEvent(events, race.time + 20, "短い間隔の切り替え",
+              "一度オフに落としすぎない。最低限の補給だけして、招集と感覚の再現を優先。", "between");
+          }
+        }
+      });
+
+      if (notes) {
+        pushEvent(events, lastRace.time + 30, "個別メモの反映ポイント", notes, "memo");
+      }
+
+      /* ---------- warnings ---------- */
+      buildWarnings({
+        warnings, addWarn, wakeTime, arrivalTime, breakfastTime, breakfastLead,
+        warmupStartTime, warmupEndTime, openingTime, officialStartFrom, officialStartTo,
+        firstRace, races, poolWarmup
+      });
+
+      events.sort((a, b) => a.time - b.time);
+      lastPlan = { athleteName, events, races, firstRace, lastRace };
+
+      renderSummary({ athleteName, firstRace, lastRace, races, poolWarmup, stomachType, officialStartFrom });
+      renderWarnings(warnings);
+      renderTimeline(events);
+    }
+
+    function buildWarnings(ctx) {
+      const { addWarn, wakeTime, arrivalTime, breakfastTime, breakfastLead,
+        warmupStartTime, warmupEndTime, openingTime, officialStartFrom, officialStartTo,
+        firstRace, races, poolWarmup } = ctx;
+
+      if (warmupEndTime !== null && warmupEndTime > firstRace.time) {
+        addWarn("alert", `W-UP終了（${minutesToTime(warmupEndTime)}）が1本目（${minutesToTime(firstRace.time)}）より後になっています。要項の時刻を確認してください。`);
+      }
+      if (warmupStartTime !== null && openingTime !== null && warmupStartTime < openingTime) {
+        addWarn("alert", `W-UP開始（${minutesToTime(warmupStartTime)}）が開門（${minutesToTime(openingTime)}）より前です。入力ミスの可能性があります。`);
+      }
+      if (officialStartFrom !== null && officialStartTo !== null && officialStartTo < officialStartFrom) {
+        addWarn("alert", "公式スタート練習の終了時刻が開始より前になっています。");
+      }
+      if (arrivalTime !== null && warmupStartTime !== null && arrivalTime > warmupStartTime) {
+        addWarn("alert", `会場到着（${minutesToTime(arrivalTime)}）がW-UP開始（${minutesToTime(warmupStartTime)}）より後です。アップに間に合わない恐れがあります。`);
+      }
+
+      const firstFuel = firstRace.time - raceProfile(firstRace.type).preSnackLead;
+      if (arrivalTime !== null && firstFuel < arrivalTime) {
+        addWarn("tip", "1本目前の補食タイミングが会場到着より前です。補食は家を出る前か移動中に前倒しを検討してください。");
+      }
+      if (breakfastLead < 180) {
+        addWarn("tip", `朝食から1本目まで約${breakfastLead}分と短めです。量を欲張らず消化しやすい主食中心にしてください。`);
+      }
+      if (wakeTime !== null && firstRace.time - wakeTime < 120) {
+        addWarn("tip", "起床から1本目までが2時間未満です。朝食・補食・アップを詰め込みすぎないよう優先順位をつけましょう。");
+      }
+      if (poolWarmup === "no") {
+        addWarn("tip", "水中アップがほぼ取れない設定です。陸アップ・チューブで肩甲帯と股関節を先に起こしておくと立ち上がりが変わります。");
+      }
+
+      for (let i = 1; i < races.length; i++) {
+        const gap = races[i].time - races[i - 1].time;
+        if (gap < 40) {
+          addWarn("alert", `「${races[i - 1].name}」→「${races[i].name}」の間隔が約${gap}分と非常に短いです。回復と招集の段取りを事前に決めておきましょう。`);
+        } else if (gap < 70) {
+          addWarn("tip", `「${races[i - 1].name}」→「${races[i].name}」の間隔は約${gap}分。補給は軽く、招集と感覚の再現を優先してください。`);
+        }
+      }
+
+      if (!warnings.length) {
+        addWarn("good", "大きな時間の衝突は見当たりません。当日は要項のアナウンス変更にだけ注意してください。");
+      }
+    }
+
+    /* ---------- render ---------- */
+    function resetSummary() {
+      summaryStrip.innerHTML = "";
+      timeline.innerHTML = '<div class="empty">左の入力から「プラン生成」を押すと、当日の流れがここに出ます。</div>';
+    }
+
+    function renderSummary(context) {
+      const { athleteName, firstRace, lastRace, races, poolWarmup, stomachType, officialStartFrom } = context;
+      summaryStrip.innerHTML = `
+        <div class="result-card">
+          <div class="label">First Race</div>
+          <strong>${minutesToTime(firstRace.time)}</strong>
+          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(firstRace.name)}</div>
+        </div>
+        <div class="result-card">
+          <div class="label">Race Count</div>
+          <strong>${races.length}本</strong>
+          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(athleteName)}の当日導線</div>
+        </div>
+        <div class="result-card">
+          <div class="label">Routine Focus</div>
+          <strong>${officialStartFrom !== null ? "要項入力あり" : poolWarmup === "no" ? "陸アップ重視" : stomachType === "sensitive" ? "補食慎重" : "標準バランス"}</strong>
+          <div class="sub" style="margin: 8px 0 0;">最終レース ${minutesToTime(lastRace.time)}</div>
+        </div>
+      `;
+    }
+
+    function renderWarnings(warnings) {
+      if (!warnings.length) { warningsWrap.style.display = "none"; return; }
+      const icon = { alert: "⚠️", tip: "💡", good: "✅" };
+      warningsWrap.style.display = "";
+      warningsEl.innerHTML = warnings.map((w) => `
+        <div class="warn-item ${w.level}">
+          <span class="ico">${icon[w.level] || "•"}</span>
+          <span>${escapeHtml(w.text)}</span>
+        </div>
+      `).join("");
+    }
+
+    const categoryMeta = {
+      base: { label: "土台", color: "var(--c-base)" },
+      fuel: { label: "補給", color: "var(--c-fuel)" },
+      activation: { label: "陸アップ", color: "var(--c-activation)" },
+      pool: { label: "水中アップ", color: "var(--c-pool)" },
+      focus: { label: "直前準備", color: "var(--c-focus)" },
+      race: { label: "レース", color: "var(--c-race)" },
+      recovery: { label: "回復", color: "var(--c-recovery)" },
+      between: { label: "合間", color: "var(--c-between)" },
+      condition: { label: "環境対応", color: "var(--c-condition)" },
+      memo: { label: "個別メモ", color: "var(--c-memo)" },
+      schedule: { label: "大会要項", color: "var(--c-schedule)" },
+      official: { label: "公式練習", color: "var(--c-official)" }
+    };
+
+    function meta(category) {
+      return categoryMeta[category] || { label: "案内", color: "var(--c-base)" };
+    }
+
+    function renderTimeline(events) {
+      // group events that share the same minute into one timeline item
+      const groups = [];
+      events.forEach((ev) => {
+        const last = groups[groups.length - 1];
+        if (last && last.time === ev.time) last.items.push(ev);
+        else groups.push({ time: ev.time, items: [ev] });
+      });
+
+      timeline.innerHTML = groups.map((group) => {
+        const accent = meta(group.items[0].category).color;
+        const rel = group.items.find((i) => i.relative);
+        const blocks = group.items.map((ev) => {
+          const m = meta(ev.category);
+          return `
+            <div class="event-block">
+              <h3>${escapeHtml(ev.title)}</h3>
+              <p>${escapeHtml(ev.detail)}</p>
+              <div class="chips"><span class="chip" style="--accent:${m.color};">${m.label}</span></div>
+            </div>`;
+        }).join("");
+        return `
+          <article class="timeline-item" style="--accent:${accent};">
+            <div class="time-col">
+              <span class="time-pill">${minutesToTime(group.time)}</span>
+              ${rel ? `<span class="rel-pill">${escapeHtml(rel.relative)}</span>` : ""}
+            </div>
+            <div>${blocks}</div>
+          </article>`;
+      }).join("");
+    }
+
+    /* ---------- share ---------- */
+    function buildShareText() {
+      if (!lastPlan) return "";
+      const lines = [];
+      lines.push(`【${lastPlan.athleteName} 大会当日プラン】`);
+      lines.push(`1本目 ${minutesToTime(lastPlan.firstRace.time)} / 全${lastPlan.races.length}本 / 最終 ${minutesToTime(lastPlan.lastRace.time)}`);
+      lines.push("");
+      lastPlan.events.forEach((ev) => {
+        const rel = ev.relative ? `（${ev.relative}）` : "";
+        lines.push(`${minutesToTime(ev.time)}  ${ev.title}${rel}`);
+        lines.push(`   ${ev.detail}`);
+      });
+      lines.push("");
+      lines.push("※体調・アレルギー等は保護者/コーチ/医療職と確認してください。");
+      return lines.join("\n");
+    }
+
+    function copyPlan() {
+      const text = buildShareText();
+      if (!text) { showToast("先に「プラン生成」を押してください"); return; }
+      const done = () => showToast("コピーしました");
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+      } else {
+        fallbackCopy(text, done);
+      }
+    }
+
+    function fallbackCopy(text, done) {
+      const ta = document.createElement("textarea");
+      ta.value = text;
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); done(); }
+      catch (e) { showToast("コピーに失敗しました"); }
+      document.body.removeChild(ta);
+    }
+
+    function showToast(msg) {
+      toastEl.textContent = msg;
+      toastEl.classList.add("show");
+      clearTimeout(showToast._t);
+      showToast._t = setTimeout(() => toastEl.classList.remove("show"), 1800);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    }
+
+    /* ---------- wire up ---------- */
+    document.getElementById("addRace").addEventListener("click", () => { createRaceRow(); saveState(); });
+    document.getElementById("loadSample").addEventListener("click", () => { loadDefaults(); saveState(); });
+    document.getElementById("generatePlan").addEventListener("click", generatePlan);
+    document.getElementById("copyPlan").addEventListener("click", copyPlan);
+    document.getElementById("printPlan").addEventListener("click", () => {
+      if (!lastPlan) { showToast("先に「プラン生成」を押してください"); return; }
+      window.print();
+    });
+
+    document.getElementById("resetForm").addEventListener("click", () => {
+      FIELD_IDS.forEach((id) => { document.getElementById(id).value = FORM_DEFAULTS[id]; });
+      loadDefaults();
+      resetSummary();
+      warningsWrap.style.display = "none";
+      lastPlan = null;
+      localStorage.removeItem(STORAGE_KEY);
+      saveStateEl.textContent = "リセットしました";
+    });
+
+    FIELD_IDS.forEach((id) => {
+      document.getElementById(id).addEventListener("change", saveState);
+    });
+
+    loadState();
+  </script>
+</body>
+</html>
