@@ -489,6 +489,7 @@
             時系列で整理するための大会当日用アプリです。レース時刻と大会要項を入れると、
             朝食、補食、陸アップ、水中アップ、レース前の整え方、レース後の回復までを1日の流れで表示します。
           </p>
+<div class="viewCounterWrap"><span class="viewCounter" id="viewCounter">👀 のべ閲覧 <strong id="viewCount">-</strong> 回</span></div>
         </div>
         <div class="hero-note">
           <strong>使い方</strong>
@@ -1215,5 +1216,30 @@
   </script>
 <div style="margin:20px auto 10px;padding:0 12px;text-align:center;font-size:11px"><span style="color:var(--ink);font-weight:700;animation:blinkNotice 1.6s ease-in-out infinite">&copy; 2026 gyojin600m1 無断複製・再配布を禁じます。</span></div>
 <style>@keyframes blinkNotice{0%,100%{opacity:1}50%{opacity:.5}}</style>
+<style>.viewCounterWrap{margin:10px 0}.viewCounter{display:none;align-items:center;gap:6px;padding:5px 12px;border:1px solid currentColor;border-radius:999px;font-size:12px;font-weight:800;line-height:1.5;opacity:.7}.viewCounter.on{display:inline-flex}.viewCounter strong{font-size:14px;font-weight:900}</style>
+<script>
+// 閲覧カウンター: Abacus(無料API)に累計値を保存。1日1回だけ加算し、失敗時は非表示のまま。
+(function(){
+  var NS="gyojin600m1-swim-meet-plannerv3";
+  var isLocal=location.protocol==="file:"||/^(localhost|127\.|0\.0\.0\.0)/.test(location.hostname)||location.hostname==="";
+  var KEY=isLocal?"views-dev":"views";
+  var d=new Date();
+  var today=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+  var stampKey="viewCounterStamp:"+NS+":"+KEY;
+  var counted=false;
+  try{counted=localStorage.getItem(stampKey)===today;}catch(e){}
+  fetch("https://abacus.jasoncameron.dev/"+(counted?"get":"hit")+"/"+NS+"/"+KEY)
+    .then(function(r){if(!r.ok)throw new Error();return r.json();})
+    .then(function(data){
+      if(typeof data.value!=="number")throw new Error();
+      var el=document.getElementById("viewCounter");
+      if(!el)return;
+      document.getElementById("viewCount").textContent=data.value.toLocaleString("ja-JP");
+      el.classList.add("on");
+      if(!counted){try{localStorage.setItem(stampKey,today);}catch(e){}}
+    })
+    .catch(function(){});
+})();
+</script>
 </body>
 </html>
