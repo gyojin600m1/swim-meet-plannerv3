@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Swim Meet Day Planner</title>
+  <title>大会当日プラン</title>
   <style>
     :root {
       --bg: #f4efe6;
@@ -66,7 +66,7 @@
       z-index: 1;
     }
 
-    .hero, .panel, .result-card, .tip-card, .race-row {
+    .hero, .panel, .result-card, .tip-card, .race-row, .day-panel {
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
     }
@@ -272,6 +272,36 @@
       color: var(--ink);
     }
 
+    .day-panel {
+      border: 1px solid rgba(31, 42, 46, 0.1);
+      border-radius: 20px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.5);
+      margin-bottom: 16px;
+    }
+
+    .day-head {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .day-label-input {
+      font-weight: 700;
+      font-size: 15px;
+    }
+
+    .remove-day {
+      flex: none;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      border-radius: 12px;
+      background: rgba(31, 42, 46, 0.06);
+      color: var(--ink);
+    }
+
     .results { display: grid; gap: 18px; }
 
     .summary-strip {
@@ -332,6 +362,17 @@
     .warn-item .ico { font-size: 16px; line-height: 1.4; }
 
     .timeline { display: grid; gap: 12px; }
+
+    .timeline-day-header {
+      margin: 6px 2px 2px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, rgba(15, 109, 122, 0.16), rgba(15, 109, 122, 0.05));
+      color: var(--sea);
+      font-weight: 800;
+      font-size: 15px;
+      display: inline-block;
+    }
 
     .timeline-item {
       display: grid;
@@ -482,20 +523,21 @@
     <section class="hero">
       <div class="hero-grid">
         <div>
-          <div class="eyebrow">Swim Meet Day Planner</div>
+          <div class="eyebrow">Swim Meet Day Plan</div>
           <h1>大会当日の流れを、レース時刻から逆算する。</h1>
           <p>
             何時からアップするか、いつ補食するか、待機中にどう過ごすかを
             時系列で整理するための大会当日用アプリです。レース時刻と大会要項を入れると、
-            朝食、補食、陸アップ、水中アップ、レース前の整え方、レース後の回復までを1日の流れで表示します。
+            朝食、補食、陸アップ/チューブ、水中アップ、招集前の直前準備、レース後の回復、
+            次のレースまでの過ごし方を1日〜複数日の流れで表示します。
           </p>
-<div class="viewCounterWrap"><span class="viewCounter" id="viewCounter">👀 のべ閲覧 <strong id="viewCount">-</strong> 回</span></div>
+          <div class="viewCounterWrap"><span class="viewCounter" id="viewCounter">👀 のべ閲覧 <strong id="viewCount">-</strong> 回</span></div>
         </div>
         <div class="hero-note">
           <strong>使い方</strong>
           <ul>
-            <li>大会要項の朝スケジュールを先に入力する</li>
-            <li>レース時刻を入れて当日の流れを確認する</li>
+            <li>大会が1日なら1日分、複数日なら日数分だけ「日を追加」する</li>
+            <li>各日の要項とレース時刻を入れて「プラン生成」を押す</li>
             <li>入力は自動保存。次の大会は微調整して使い回す</li>
           </ul>
         </div>
@@ -505,93 +547,22 @@
     <section class="layout">
       <div class="panel">
         <h2>入力</h2>
-        <p class="sub">大会要項とレース時刻を入れて、当日の流れを整理します。レースが複数ある場合は追加できます。</p>
+        <p class="sub">選手名を入れて、大会の日数分だけ「日」を追加し、各日の要項とレース時刻を入れます。</p>
 
-        <div class="field-grid">
-          <div class="field">
-            <label for="athleteName">選手名</label>
-            <input id="athleteName" type="text" value="サンプル選手">
-          </div>
-          <div class="field">
-            <label for="wakeTime">起床時刻</label>
-            <input id="wakeTime" type="time" value="05:45">
-          </div>
-          <div class="field">
-            <label for="arrivalTime">会場到着</label>
-            <input id="arrivalTime" type="time" value="07:00">
-          </div>
-          <div class="field">
-            <label for="stomachType">お腹の強さ</label>
-            <select id="stomachType">
-              <option value="normal">普通</option>
-              <option value="sensitive">弱め</option>
-            </select>
-          </div>
-          <div class="field">
-            <label for="weatherLoad">環境負荷</label>
-            <select id="weatherLoad">
-              <option value="normal">標準</option>
-              <option value="hot">暑い / 蒸し暑い</option>
-              <option value="cold">冷える</option>
-            </select>
-          </div>
+        <div class="field">
+          <label for="athleteName">選手名</label>
+          <input id="athleteName" type="text" value="サンプル選手">
         </div>
 
         <div class="field">
-          <span>朝の大会要項</span>
-          <div class="mini">大会ごとに変わる朝の流れを毎回入力できるようにします。</div>
+          <span>大会日程</span>
+          <div class="mini">1日開催ならそのまま。複数日大会は「日を追加」で日数分増やせます。</div>
         </div>
 
-        <div class="field-grid">
-          <div class="field">
-            <label for="openingTime">開門</label>
-            <input id="openingTime" type="time" value="07:30">
-          </div>
-          <div class="field">
-            <label for="warmupStartTime">W-UP開始</label>
-            <input id="warmupStartTime" type="time" value="07:40">
-          </div>
-          <div class="field">
-            <label for="officialStartFrom">公式スタート練習 開始</label>
-            <input id="officialStartFrom" type="time" value="08:40">
-          </div>
-          <div class="field">
-            <label for="officialStartTo">公式スタート練習 終了</label>
-            <input id="officialStartTo" type="time" value="09:00">
-          </div>
-          <div class="field">
-            <label for="warmupEndTime">W-UP終了</label>
-            <input id="warmupEndTime" type="time" value="09:05">
-          </div>
-          <div class="field">
-            <label for="poolWarmup">水中アップ環境</label>
-            <select id="poolWarmup">
-              <option value="yes">しっかり取れる</option>
-              <option value="limited">短い / 混む</option>
-              <option value="no">ほぼ取れない</option>
-            </select>
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="laneNote">レーン運用メモ</label>
-          <textarea id="laneNote" placeholder="例: 7:40-8:35は0レーンダッシュ、1-8アップ、9レーンペース / 8:40-9:00は1-8公式スタート練習"></textarea>
-        </div>
-
-        <div class="field">
-          <label for="notes">個別メモ</label>
-          <textarea id="notes" placeholder="例: 100mの前はバナナ半分が合う / 午後は眠くなりやすい / ゴーグルは2本持つ"></textarea>
-        </div>
-
-        <div class="field">
-          <span>レース一覧</span>
-          <div class="mini">種目名、時刻、負荷感でざっくり逆算します。</div>
-          <div id="raceList" class="race-list"></div>
-        </div>
+        <div id="daysContainer"></div>
 
         <div class="small-actions" style="margin-bottom: 14px;">
-          <button class="secondary" id="addRace">レースを追加</button>
-          <button class="secondary" id="loadSample">サンプル読込</button>
+          <button class="secondary" id="addDay">＋ 日を追加</button>
         </div>
 
         <div class="button-row">
@@ -611,9 +582,9 @@
         <div class="result-card" id="usageCard">
           <h2>使い方の目安</h2>
           <p class="sub" style="margin-bottom: 0;">
-            まず大会要項の朝スケジュールを入力し、そのあとにレース時刻を入れてください。
-            1本目までの流れ、レース間のつなぎ、最終レース後の回復までを一画面で確認できます。
-            入力内容はこのブラウザに自動保存されます。
+            まず選手名を入れ、大会日数分だけ「日を追加」してください。各日の朝の要項（開門・W-UP・公式スタート練習など）と
+            レース時刻を入れたら「プラン生成」を押します。1本目までの流れ、レース間のつなぎ、日をまたいだ最終レース後の
+            回復までを一画面で確認できます。入力内容はこのブラウザに自動保存されます。
           </p>
         </div>
 
@@ -649,6 +620,19 @@
             </ul>
           </div>
           <div class="tip-card">
+            <h3>レース前補食の段階（2時間前〜直前）</h3>
+            <ul>
+              <li>2時間前: おにぎり・サンドイッチ・あんぱんなど手軽なもの（おにぎりは海苔なしが食べやすい。具は梅・鮭がおすすめ、ツナマヨ等の脂質が多いものは避ける）</li>
+              <li>1時間前: バナナなど糖質の多い果物、カステラなど脂質の少ない和菓子</li>
+              <li>30分前: エネルギーゼリー、スポーツドリンクで糖質補給</li>
+              <li>直前: どうしても空腹なら、飴やブドウ糖など口の中ですぐ溶けるものを少量</li>
+            </ul>
+            <p class="mini" style="margin-top:8px;">
+              出典: 鹿児島県水泳連盟 栄養士 西山七海「大会の時の補食って何を食べたらいいの？？」（2026年7月号コラム）を参考に要約。
+              レース間隔が短い時はタイムライン側で自動的に段階を間引きます。
+            </p>
+          </div>
+          <div class="tip-card">
             <h3>待機中の基本</h3>
             <ul>
               <li>座りっぱなしで固まりすぎない</li>
@@ -668,7 +652,8 @@
             <h3>朝の大会要項の入れ方</h3>
             <p>
               開門、W-UP開始、公式スタート練習、W-UP終了は大会ごとに変わります。
-              要項どおりに入力しておくと、1本目までの流れを崩しにくくなります。
+              複数日大会は日によっても変わるので、日ごとに要項どおり入力しておくと、
+              1本目までの流れを崩しにくくなります。
             </p>
           </div>
           <div class="tip-card">
@@ -677,6 +662,7 @@
               サプリを主役にせず、普段から試した食事と補食を中心に組む考え方で作っています。
               スポーツ栄養の基本を土台にしつつ、ジュニア向けなので言い切りすぎず、
               「消化しやすい主食寄り」「大会当日に初めての物を入れない」を強めに置いています。
+              レース前の段階的な補食タイミングは、鹿児島県水泳連盟の栄養士コラムを参考にしています。
             </p>
           </div>
           <div class="tip-card">
@@ -715,9 +701,102 @@
     </div>
   </template>
 
+  <template id="dayPanelTemplate">
+    <div class="day-panel">
+      <div class="day-head">
+        <input type="text" class="day-label-input" data-role="dayLabel" placeholder="例: 1日目（7/25 予選）">
+        <button class="remove-day" type="button" title="この日を削除">×</button>
+      </div>
+
+      <div class="field-grid">
+        <div class="field">
+          <label>お腹の強さ</label>
+          <select data-role="stomachType">
+            <option value="normal">普通</option>
+            <option value="sensitive">弱め</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>環境負荷</label>
+          <select data-role="weatherLoad">
+            <option value="normal">標準</option>
+            <option value="hot">暑い / 蒸し暑い</option>
+            <option value="cold">冷える</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>起床時刻</label>
+          <input type="time" data-role="wakeTime" value="05:45">
+        </div>
+        <div class="field">
+          <label>会場到着</label>
+          <input type="time" data-role="arrivalTime" value="07:00">
+        </div>
+      </div>
+
+      <div class="field">
+        <span>この日の大会要項</span>
+        <div class="mini">開門・W-UP・公式スタート練習など、大会ごとに変わる朝の流れを入力します。</div>
+      </div>
+
+      <div class="field-grid">
+        <div class="field">
+          <label>開門</label>
+          <input type="time" data-role="openingTime" value="07:30">
+        </div>
+        <div class="field">
+          <label>W-UP開始</label>
+          <input type="time" data-role="warmupStartTime" value="07:40">
+        </div>
+        <div class="field">
+          <label>公式スタート練習 開始</label>
+          <input type="time" data-role="officialStartFrom" value="08:40">
+        </div>
+        <div class="field">
+          <label>公式スタート練習 終了</label>
+          <input type="time" data-role="officialStartTo" value="09:00">
+        </div>
+        <div class="field">
+          <label>W-UP終了</label>
+          <input type="time" data-role="warmupEndTime" value="09:05">
+        </div>
+        <div class="field">
+          <label>水中アップ環境</label>
+          <select data-role="poolWarmup">
+            <option value="yes">しっかり取れる</option>
+            <option value="limited">短い / 混む</option>
+            <option value="no">ほぼ取れない</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>レーン運用メモ</label>
+        <textarea data-role="laneNote" placeholder="例: 7:40-8:35は0レーンダッシュ、1-8アップ、9レーンペース / 8:40-9:00は1-8公式スタート練習"></textarea>
+      </div>
+
+      <div class="field">
+        <label>個別メモ</label>
+        <textarea data-role="notes" placeholder="例: 100mの前はバナナ半分が合う / 午後は眠くなりやすい / ゴーグルは2本持つ"></textarea>
+      </div>
+
+      <div class="field">
+        <span>この日のレース一覧</span>
+        <div class="mini">種目名、時刻、負荷感でざっくり逆算します。</div>
+        <div class="race-list" data-role="raceList"></div>
+      </div>
+
+      <div class="small-actions">
+        <button class="secondary" data-action="addRace">レースを追加</button>
+        <button class="secondary" data-action="loadSample">サンプル読込</button>
+      </div>
+    </div>
+  </template>
+
   <script>
-    const STORAGE_KEY = "swimMeetPlanner.v2";
-    const raceList = document.getElementById("raceList");
+    const STORAGE_KEY = "swimRaceDayPlan.v1";
+    const daysContainer = document.getElementById("daysContainer");
+    const dayTemplate = document.getElementById("dayPanelTemplate");
     const raceTemplate = document.getElementById("raceRowTemplate");
     const summaryStrip = document.getElementById("summaryStrip");
     const timeline = document.getElementById("timeline");
@@ -725,28 +804,29 @@
     const warningsEl = document.getElementById("warnings");
     const saveStateEl = document.getElementById("saveState");
     const toastEl = document.getElementById("toast");
+    const athleteNameInput = document.getElementById("athleteName");
 
-    const FIELD_IDS = [
-      "athleteName", "wakeTime", "arrivalTime", "stomachType", "weatherLoad",
+    const DAY_FIELD_ROLES = [
+      "wakeTime", "arrivalTime", "stomachType", "weatherLoad",
       "openingTime", "warmupStartTime", "officialStartFrom", "officialStartTo",
       "warmupEndTime", "poolWarmup", "laneNote", "notes"
     ];
 
-    const FORM_DEFAULTS = {
-      athleteName: "サンプル選手", wakeTime: "05:45", arrivalTime: "07:00",
-      stomachType: "normal", weatherLoad: "normal", openingTime: "07:30",
-      warmupStartTime: "07:40", officialStartFrom: "08:40", officialStartTo: "09:00",
+    const DAY_FIELD_DEFAULTS = {
+      wakeTime: "05:45", arrivalTime: "07:00", stomachType: "normal", weatherLoad: "normal",
+      openingTime: "07:30", warmupStartTime: "07:40", officialStartFrom: "08:40", officialStartTo: "09:00",
       warmupEndTime: "09:05", poolWarmup: "yes", laneNote: "", notes: ""
     };
 
-    const defaults = [
+    const defaultRaces = [
       { name: "50m自由形", time: "09:42", type: "sprint" },
       { name: "100mバタフライ", time: "14:18", type: "middle" }
     ];
 
     let lastPlan = null;
 
-    function createRaceRow(data = {}) {
+    /* ---------- race rows ---------- */
+    function createRaceRow(container, data = {}) {
       const row = raceTemplate.content.firstElementChild.cloneNode(true);
       row.querySelector('[data-role="name"]').value = data.name || "";
       row.querySelector('[data-role="time"]').value = data.time || "09:30";
@@ -758,26 +838,96 @@
       row.querySelectorAll("input, select").forEach((el) => {
         el.addEventListener("change", saveState);
       });
-      raceList.appendChild(row);
+      container.appendChild(row);
     }
 
-    function loadDefaults() {
-      raceList.innerHTML = "";
-      defaults.forEach(createRaceRow);
+    /* ---------- day panels ---------- */
+    function dayLabelDefault(index) {
+      return `${index + 1}日目`;
     }
 
-    function readRaceRows() {
-      return [...raceList.querySelectorAll(".race-row")].map((row) => ({
-        name: row.querySelector('[data-role="name"]').value,
-        time: row.querySelector('[data-role="time"]').value,
-        type: row.querySelector('[data-role="type"]').value
-      }));
+    function createDayPanel(data = {}) {
+      const panel = dayTemplate.content.firstElementChild.cloneNode(true);
+      const index = daysContainer.children.length;
+
+      const labelInput = panel.querySelector('[data-role="dayLabel"]');
+      labelInput.value = data.label || dayLabelDefault(index);
+      labelInput.addEventListener("change", saveState);
+
+      DAY_FIELD_ROLES.forEach((role) => {
+        const el = panel.querySelector(`[data-role="${role}"]`);
+        el.value = (data.fields && data.fields[role] !== undefined) ? data.fields[role] : DAY_FIELD_DEFAULTS[role];
+        el.addEventListener("change", saveState);
+      });
+
+      const raceListEl = panel.querySelector('[data-role="raceList"]');
+      const races = (data.races && data.races.length) ? data.races : defaultRaces;
+      races.forEach((r) => createRaceRow(raceListEl, r));
+
+      panel.querySelector('[data-action="addRace"]').addEventListener("click", () => {
+        createRaceRow(raceListEl);
+        saveState();
+      });
+      panel.querySelector('[data-action="loadSample"]').addEventListener("click", () => {
+        raceListEl.innerHTML = "";
+        defaultRaces.forEach((r) => createRaceRow(raceListEl, r));
+        saveState();
+      });
+      panel.querySelector(".remove-day").addEventListener("click", () => {
+        if (daysContainer.children.length <= 1) {
+          showToast("最低1日分は必要です");
+          return;
+        }
+        panel.remove();
+        renumberDays();
+        saveState();
+      });
+
+      daysContainer.appendChild(panel);
+      updateRemoveDayButtons();
+      return panel;
+    }
+
+    function renumberDays() {
+      [...daysContainer.children].forEach((panel, i) => {
+        const labelInput = panel.querySelector('[data-role="dayLabel"]');
+        if (/^\d+日目$/.test(labelInput.value.trim())) {
+          labelInput.value = dayLabelDefault(i);
+        }
+      });
+      updateRemoveDayButtons();
+    }
+
+    function updateRemoveDayButtons() {
+      const panels = [...daysContainer.children];
+      panels.forEach((panel) => {
+        panel.querySelector(".remove-day").style.visibility = panels.length <= 1 ? "hidden" : "visible";
+      });
+    }
+
+    function addDay() {
+      createDayPanel();
+      saveState();
+    }
+
+    function readDays() {
+      return [...daysContainer.children].map((panel) => {
+        const fields = {};
+        DAY_FIELD_ROLES.forEach((role) => {
+          fields[role] = panel.querySelector(`[data-role="${role}"]`).value;
+        });
+        const races = [...panel.querySelectorAll(".race-row")].map((row) => ({
+          name: row.querySelector('[data-role="name"]').value,
+          time: row.querySelector('[data-role="time"]').value,
+          type: row.querySelector('[data-role="type"]').value
+        }));
+        return { label: panel.querySelector('[data-role="dayLabel"]').value.trim(), fields, races };
+      });
     }
 
     /* ---------- persistence ---------- */
     function saveState() {
-      const state = { fields: {}, races: readRaceRows() };
-      FIELD_IDS.forEach((id) => { state.fields[id] = document.getElementById(id).value; });
+      const state = { athleteName: athleteNameInput.value, days: readDays() };
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
         const t = new Date();
@@ -795,16 +945,16 @@
         state = JSON.parse(localStorage.getItem(STORAGE_KEY));
       } catch (e) { state = null; }
 
-      if (!state || !state.fields) {
-        loadDefaults();
+      daysContainer.innerHTML = "";
+
+      if (!state || !state.days || !state.days.length) {
+        athleteNameInput.value = "サンプル選手";
+        createDayPanel();
         return false;
       }
-      FIELD_IDS.forEach((id) => {
-        if (state.fields[id] !== undefined) document.getElementById(id).value = state.fields[id];
-      });
-      raceList.innerHTML = "";
-      const races = (state.races && state.races.length) ? state.races : defaults;
-      races.forEach(createRaceRow);
+
+      athleteNameInput.value = state.athleteName || "サンプル選手";
+      state.days.forEach((d) => createDayPanel(d));
       saveStateEl.textContent = "前回の入力を読み込みました";
       return true;
     }
@@ -840,40 +990,50 @@
       return "例: おにぎり、バナナ、ゼリー、カステラ、パン、ヨーグルト、うどん。";
     }
 
-    /* ---------- plan ---------- */
-    function generatePlan() {
-      saveState();
+    // 段階別の補食タイミング（2時間前/1時間前/30分前）。
+    // 出典: 鹿児島県水泳連盟 栄養士 西山七海「大会の時の補食って何を食べたらいいの？？」を参考に要約。
+    function preRaceFuelStages(stomachType) {
+      const sensitiveNote = stomachType === "sensitive" ? " お腹が弱い日は量を控えめに。" : "";
+      return [
+        {
+          lead: 120,
+          label: "2時間前の補食",
+          detail: `おにぎり・サンドイッチ・あんぱんなど手軽に食べられるものを。おにぎりは海苔なしが食べやすく、具は梅・鮭がおすすめ。ツナマヨ・エビマヨなど脂質の多い具は避ける。${sensitiveNote}`
+        },
+        {
+          lead: 60,
+          label: "1時間前の補食",
+          detail: `バナナなど糖質の多い果物、カステラなど脂質の少ない和菓子に切り替える。${sensitiveNote}`
+        },
+        {
+          lead: 30,
+          label: "30分前の補食",
+          detail: "エネルギーゼリーやスポーツドリンクで糖質を補給。固形物より消化の負担が軽い。"
+        }
+      ];
+    }
 
-      const athleteName = document.getElementById("athleteName").value.trim() || "選手";
-      const wakeTime = timeToMinutes(document.getElementById("wakeTime").value);
-      const arrivalTime = timeToMinutes(document.getElementById("arrivalTime").value);
-      const openingTime = timeToMinutes(document.getElementById("openingTime").value);
-      const warmupStartTime = timeToMinutes(document.getElementById("warmupStartTime").value);
-      const officialStartFrom = timeToMinutes(document.getElementById("officialStartFrom").value);
-      const officialStartTo = timeToMinutes(document.getElementById("officialStartTo").value);
-      const warmupEndTime = timeToMinutes(document.getElementById("warmupEndTime").value);
-      const poolWarmup = document.getElementById("poolWarmup").value;
-      const stomachType = document.getElementById("stomachType").value;
-      const weatherLoad = document.getElementById("weatherLoad").value;
-      const laneNote = document.getElementById("laneNote").value.trim();
-      const notes = document.getElementById("notes").value.trim();
+    /* ---------- per-day plan ---------- */
+    function buildDayEvents(athleteName, fields, races) {
+      if (!races.length) return null;
 
-      const races = readRaceRows()
-        .map((r) => ({ name: r.name.trim(), time: timeToMinutes(r.time), type: r.type }))
-        .filter((race) => race.name && race.time !== null)
-        .sort((a, b) => a.time - b.time);
-
-      if (!races.length) {
-        resetSummary();
-        warningsWrap.style.display = "none";
-        return;
-      }
+      const wakeTime = timeToMinutes(fields.wakeTime);
+      const arrivalTime = timeToMinutes(fields.arrivalTime);
+      const openingTime = timeToMinutes(fields.openingTime);
+      const warmupStartTime = timeToMinutes(fields.warmupStartTime);
+      const officialStartFrom = timeToMinutes(fields.officialStartFrom);
+      const officialStartTo = timeToMinutes(fields.officialStartTo);
+      const warmupEndTime = timeToMinutes(fields.warmupEndTime);
+      const poolWarmup = fields.poolWarmup;
+      const stomachType = fields.stomachType;
+      const weatherLoad = fields.weatherLoad;
+      const laneNote = (fields.laneNote || "").trim();
+      const notes = (fields.notes || "").trim();
 
       const firstRace = races[0];
       const lastRace = races[races.length - 1];
       const events = [];
       const warnings = [];
-
       const addWarn = (level, text) => warnings.push({ level, text });
 
       const breakfastLead = firstRace.time - wakeTime >= 210 ? 210 : 150;
@@ -930,10 +1090,21 @@
           : poolWarmup === "yes" ? profile.poolLead : poolWarmup === "limited" ? profile.poolLead - 10 : null;
         const dryLead = poolWarmup === "no" ? profile.dryLead + 10 : profile.dryLead;
         const nextRace = races[index + 1];
+        const prevRace = races[index - 1];
 
-        pushEvent(events, race.time - profile.preSnackLead, `${race.name} 前の補食`,
-          `食べ過ぎず、主食寄りで少量。お腹が弱い日はさらに軽くする。 ${foodExamples(stomachType)}`,
-          "fuel", rel(profile.preSnackLead));
+        // 補食は前レースの回復（+15分）や到着/朝食より前には遡らない
+        const fuelBoundary = prevRace ? prevRace.time + 15 : Math.max(arrivalTime, breakfastTime + 15);
+        const fuelStages = preRaceFuelStages(stomachType).filter((s) => race.time - s.lead > fuelBoundary);
+
+        if (fuelStages.length) {
+          fuelStages.forEach((s) => {
+            pushEvent(events, race.time - s.lead, `${race.name} ${s.label}`, s.detail, "fuel", rel(s.lead));
+          });
+        } else {
+          pushEvent(events, race.time - profile.preSnackLead, `${race.name} 前の補食`,
+            `食べ過ぎず、主食寄りで少量。お腹が弱い日はさらに軽くする。 ${foodExamples(stomachType)}`,
+            "fuel", rel(profile.preSnackLead));
+        }
 
         pushEvent(events, race.time - dryLead, `${race.name} 前の陸アップ / チューブ`,
           "肩・背中・股関節・体幹を起こす。大会当日に新しい動きを入れず、練習で使っている流れだけに絞る。",
@@ -984,23 +1155,18 @@
         pushEvent(events, lastRace.time + 30, "個別メモの反映ポイント", notes, "memo");
       }
 
-      /* ---------- warnings ---------- */
       buildWarnings({
-        warnings, addWarn, wakeTime, arrivalTime, breakfastTime, breakfastLead,
+        addWarn, wakeTime, arrivalTime, breakfastLead,
         warmupStartTime, warmupEndTime, openingTime, officialStartFrom, officialStartTo,
         firstRace, races, poolWarmup
       });
 
       events.sort((a, b) => a.time - b.time);
-      lastPlan = { athleteName, events, races, firstRace, lastRace };
-
-      renderSummary({ athleteName, firstRace, lastRace, races, poolWarmup, stomachType, officialStartFrom });
-      renderWarnings(warnings);
-      renderTimeline(events);
+      return { events, warnings, races, firstRace, lastRace };
     }
 
     function buildWarnings(ctx) {
-      const { addWarn, wakeTime, arrivalTime, breakfastTime, breakfastLead,
+      const { addWarn, wakeTime, arrivalTime, breakfastLead,
         warmupStartTime, warmupEndTime, openingTime, officialStartFrom, officialStartTo,
         firstRace, races, poolWarmup } = ctx;
 
@@ -1039,10 +1205,45 @@
           addWarn("tip", `「${races[i - 1].name}」→「${races[i].name}」の間隔は約${gap}分。補給は軽く、招集と感覚の再現を優先してください。`);
         }
       }
+    }
 
-      if (!warnings.length) {
-        addWarn("good", "大きな時間の衝突は見当たりません。当日は要項のアナウンス変更にだけ注意してください。");
+    /* ---------- plan (all days) ---------- */
+    function generatePlan() {
+      saveState();
+
+      const athleteName = athleteNameInput.value.trim() || "選手";
+      const dayInputs = readDays().map((d) => ({
+        label: d.label || "1日目",
+        fields: d.fields,
+        races: d.races
+          .map((r) => ({ name: r.name.trim(), time: timeToMinutes(r.time), type: r.type }))
+          .filter((race) => race.name && race.time !== null)
+          .sort((a, b) => a.time - b.time)
+      }));
+
+      const dayResults = dayInputs
+        .map((d) => {
+          const result = buildDayEvents(athleteName, d.fields, d.races);
+          if (!result) return null;
+          if (!result.warnings.length) {
+            result.warnings.push({ level: "good", text: "大きな時間の衝突は見当たりません。当日は要項のアナウンス変更にだけ注意してください。" });
+          }
+          return { label: d.label, ...result };
+        })
+        .filter(Boolean);
+
+      if (!dayResults.length) {
+        resetSummary();
+        warningsWrap.style.display = "none";
+        lastPlan = null;
+        return;
       }
+
+      lastPlan = { athleteName, dayResults };
+
+      renderSummary({ athleteName, dayResults });
+      renderWarnings(dayResults);
+      renderTimeline(dayResults);
     }
 
     /* ---------- render ---------- */
@@ -1051,32 +1252,38 @@
       timeline.innerHTML = '<div class="empty">左の入力から「プラン生成」を押すと、当日の流れがここに出ます。</div>';
     }
 
-    function renderSummary(context) {
-      const { athleteName, firstRace, lastRace, races, poolWarmup, stomachType, officialStartFrom } = context;
+    function renderSummary({ athleteName, dayResults }) {
+      const totalRaces = dayResults.reduce((sum, d) => sum + d.races.length, 0);
+      const firstDay = dayResults[0];
+      const lastDay = dayResults[dayResults.length - 1];
       summaryStrip.innerHTML = `
         <div class="result-card">
           <div class="label">First Race</div>
-          <strong>${minutesToTime(firstRace.time)}</strong>
-          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(firstRace.name)}</div>
+          <strong>${minutesToTime(firstDay.firstRace.time)}</strong>
+          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(firstDay.label)} ・ ${escapeHtml(firstDay.firstRace.name)}</div>
         </div>
         <div class="result-card">
           <div class="label">Race Count</div>
-          <strong>${races.length}本</strong>
-          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(athleteName)}の当日導線</div>
+          <strong>${totalRaces}本</strong>
+          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(athleteName)}の${dayResults.length}日間の導線</div>
         </div>
         <div class="result-card">
-          <div class="label">Routine Focus</div>
-          <strong>${officialStartFrom !== null ? "要項入力あり" : poolWarmup === "no" ? "陸アップ重視" : stomachType === "sensitive" ? "補食慎重" : "標準バランス"}</strong>
-          <div class="sub" style="margin: 8px 0 0;">最終レース ${minutesToTime(lastRace.time)}</div>
+          <div class="label">Last Race</div>
+          <strong>${minutesToTime(lastDay.lastRace.time)}</strong>
+          <div class="sub" style="margin: 8px 0 0;">${escapeHtml(lastDay.label)} ・ ${escapeHtml(lastDay.lastRace.name)}</div>
         </div>
       `;
     }
 
-    function renderWarnings(warnings) {
-      if (!warnings.length) { warningsWrap.style.display = "none"; return; }
+    function renderWarnings(dayResults) {
+      const items = [];
+      dayResults.forEach((d) => {
+        d.warnings.forEach((w) => items.push({ level: w.level, text: `【${d.label}】${w.text}` }));
+      });
+      if (!items.length) { warningsWrap.style.display = "none"; return; }
       const icon = { alert: "⚠️", tip: "💡", good: "✅" };
       warningsWrap.style.display = "";
-      warningsEl.innerHTML = warnings.map((w) => `
+      warningsEl.innerHTML = items.map((w) => `
         <div class="warn-item ${w.level}">
           <span class="ico">${icon[w.level] || "•"}</span>
           <span>${escapeHtml(w.text)}</span>
@@ -1103,35 +1310,38 @@
       return categoryMeta[category] || { label: "案内", color: "var(--c-base)" };
     }
 
-    function renderTimeline(events) {
-      // group events that share the same minute into one timeline item
-      const groups = [];
-      events.forEach((ev) => {
-        const last = groups[groups.length - 1];
-        if (last && last.time === ev.time) last.items.push(ev);
-        else groups.push({ time: ev.time, items: [ev] });
-      });
+    function renderTimeline(dayResults) {
+      timeline.innerHTML = dayResults.map((d) => {
+        const groups = [];
+        d.events.forEach((ev) => {
+          const last = groups[groups.length - 1];
+          if (last && last.time === ev.time) last.items.push(ev);
+          else groups.push({ time: ev.time, items: [ev] });
+        });
 
-      timeline.innerHTML = groups.map((group) => {
-        const accent = meta(group.items[0].category).color;
-        const rel = group.items.find((i) => i.relative);
-        const blocks = group.items.map((ev) => {
-          const m = meta(ev.category);
+        const groupsHtml = groups.map((group) => {
+          const accent = meta(group.items[0].category).color;
+          const rel = group.items.find((i) => i.relative);
+          const blocks = group.items.map((ev) => {
+            const m = meta(ev.category);
+            return `
+              <div class="event-block">
+                <h3>${escapeHtml(ev.title)}</h3>
+                <p>${escapeHtml(ev.detail)}</p>
+                <div class="chips"><span class="chip" style="--accent:${m.color};">${m.label}</span></div>
+              </div>`;
+          }).join("");
           return `
-            <div class="event-block">
-              <h3>${escapeHtml(ev.title)}</h3>
-              <p>${escapeHtml(ev.detail)}</p>
-              <div class="chips"><span class="chip" style="--accent:${m.color};">${m.label}</span></div>
-            </div>`;
+            <article class="timeline-item" style="--accent:${accent};">
+              <div class="time-col">
+                <span class="time-pill">${minutesToTime(group.time)}</span>
+                ${rel ? `<span class="rel-pill">${escapeHtml(rel.relative)}</span>` : ""}
+              </div>
+              <div>${blocks}</div>
+            </article>`;
         }).join("");
-        return `
-          <article class="timeline-item" style="--accent:${accent};">
-            <div class="time-col">
-              <span class="time-pill">${minutesToTime(group.time)}</span>
-              ${rel ? `<span class="rel-pill">${escapeHtml(rel.relative)}</span>` : ""}
-            </div>
-            <div>${blocks}</div>
-          </article>`;
+
+        return `<div class="timeline-day-header">${escapeHtml(d.label)}</div>${groupsHtml}`;
       }).join("");
     }
 
@@ -1140,12 +1350,16 @@
       if (!lastPlan) return "";
       const lines = [];
       lines.push(`【${lastPlan.athleteName} 大会当日プラン】`);
-      lines.push(`1本目 ${minutesToTime(lastPlan.firstRace.time)} / 全${lastPlan.races.length}本 / 最終 ${minutesToTime(lastPlan.lastRace.time)}`);
-      lines.push("");
-      lastPlan.events.forEach((ev) => {
-        const rel = ev.relative ? `（${ev.relative}）` : "";
-        lines.push(`${minutesToTime(ev.time)}  ${ev.title}${rel}`);
-        lines.push(`   ${ev.detail}`);
+      const totalRaces = lastPlan.dayResults.reduce((sum, d) => sum + d.races.length, 0);
+      lines.push(`全${lastPlan.dayResults.length}日間 / 総${totalRaces}本`);
+      lastPlan.dayResults.forEach((d) => {
+        lines.push("");
+        lines.push(`■ ${d.label}`);
+        d.events.forEach((ev) => {
+          const rel = ev.relative ? `（${ev.relative}）` : "";
+          lines.push(`${minutesToTime(ev.time)}  ${ev.title}${rel}`);
+          lines.push(`   ${ev.detail}`);
+        });
       });
       lines.push("");
       lines.push("※体調・アレルギー等は保護者/コーチ/医療職と確認してください。");
@@ -1189,8 +1403,7 @@
     }
 
     /* ---------- wire up ---------- */
-    document.getElementById("addRace").addEventListener("click", () => { createRaceRow(); saveState(); });
-    document.getElementById("loadSample").addEventListener("click", () => { loadDefaults(); saveState(); });
+    document.getElementById("addDay").addEventListener("click", addDay);
     document.getElementById("generatePlan").addEventListener("click", generatePlan);
     document.getElementById("copyPlan").addEventListener("click", copyPlan);
     document.getElementById("printPlan").addEventListener("click", () => {
@@ -1199,8 +1412,9 @@
     });
 
     document.getElementById("resetForm").addEventListener("click", () => {
-      FIELD_IDS.forEach((id) => { document.getElementById(id).value = FORM_DEFAULTS[id]; });
-      loadDefaults();
+      daysContainer.innerHTML = "";
+      athleteNameInput.value = "サンプル選手";
+      createDayPanel();
       resetSummary();
       warningsWrap.style.display = "none";
       lastPlan = null;
@@ -1208,9 +1422,7 @@
       saveStateEl.textContent = "リセットしました";
     });
 
-    FIELD_IDS.forEach((id) => {
-      document.getElementById(id).addEventListener("change", saveState);
-    });
+    athleteNameInput.addEventListener("change", saveState);
 
     loadState();
   </script>
