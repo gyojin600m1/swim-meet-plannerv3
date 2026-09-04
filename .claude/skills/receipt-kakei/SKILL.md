@@ -1,0 +1,164 @@
+---
+name: receipt-kakei
+description: Read Japanese supermarket/drugstore receipt photos, split them into line items, categorize each item, and write them straight into the パシャ家計 budget app's artifact database. Use whenever the user sends receipt photos (レシート), asks to record spending into 家計簿/パシャ家計, or asks to check what is already recorded there.
+---
+
+# パシャ家計 — レシート取り込み
+
+Turn receipt photos into categorized expense rows in the パシャ家計 app's
+database. Read the photo here in the conversation and write the rows with the
+`Artifact` tool — the user does not copy, paste, or retype anything.
+
+## The app
+
+| | |
+|---|---|
+| Artifact | https://claude.ai/code/artifact/bcc8e2fc-5b86-4d76-83d3-a8aaf0c561a4 |
+| Source | `pasha-kakei.html` (published from a scratchpad; re-read the artifact if you need the current code) |
+| Collection | `transactions` |
+| Settings doc | `settings/categories` — `{hiddenCategoryIds, customCategories}` |
+
+The app subscribes to `transactions` with `onSnapshot`, so rows appear on the
+user's phone the moment the write commits. No republish, no reload.
+
+## Document shape
+
+Every row is one **item**, not one receipt. Write exactly these fields — the
+app's calendar and report tabs read all of them:
+
+```json
+{
+  "type": "expense",
+  "date": "2026-09-04",
+  "yearMonth": "2026-09",
+  "category": "food",
+  "amount": 5080,
+  "memo": "国産塩さば切身",
+  "store": "業務スーパー 谷山店",
+  "receiptId": "rcpt-20260904-5080",
+  "source": "receipt",
+  "createdAt": "2026-09-04T00:00:00.000Z"
+}
+```
+
+- `amount` — integer yen, no commas, **after** any discount.
+- `memo` — the item name as printed, even if the receipt truncates it
+  (`やわらか卵のシフ` stays as-is; do not guess the full word).
+- `yearMonth` — must be `date[:7]`; the report tab groups on it.
+- `receiptId` — same value for every item off one receipt, so a receipt can be
+  found and removed as a unit.
+- `source` — `"receipt"` here; the app writes `"manual"` for typed entries.
+
+## Category IDs
+
+Use the `id`, never the Japanese label:
+
+`food` 食料品 · `daily` 日用品 · `clothing` 衣服 · `beauty` 美容 ·
+`social` 交際費 · `medical` 医療費 · `education` 教育費 · `utility` 光熱費 ·
+`transport` 交通費 · `communication` 通信費 · `housing` 住居費 ·
+`hobby` 趣味・娯楽 · `alcohol` 酒・アルコール · `pet` ペット用品 · `other` その他
+
+Income rows use `type:"income"` with `salary` / `side` / `allowance` /
+`other_income`.
+
+Before assigning, check `settings/categories` for `customCategories` the user
+added and `hiddenCategoryIds` they turned off — do not assign a hidden one.
+
+## Reading rules
+
+These come from real receipts that were misread before. Follow them exactly.
+
+**1. Discount lines fold into the item above.** `割引` / `値引` is never its own
+row — subtract it from the preceding item.
+
+> `国産塩さば切身 ¥298` then `割引20% -60` → one row, `国産塩さば切身`, **238**.
+
+**2. Quantity lines are already totaled.** A line like `(3個 x @88)` restates
+the line above; the amount printed on the item line is the total. Emit one row
+at that amount, and drop the quantity line.
+
+**3. Skip the footer.** 小計 / 合計 / 外税額 / 内消費税 / 買上点数 / お預り /
+お釣り / クレジット / card numbers / 登録番号 / 電話番号 are never items.
+
+**4. The tax mark is evidence, not decoration.** This is the single most
+reliable signal on a Japanese receipt:
+
+| Mark | Rate | Means |
+|---|---|---|
+| `外8` `内8` `◆` `※` | 8% 軽減税率 | food & drink for people → `food` |
+| `外10` or no mark | 10% | not human food → `alcohol` / `daily` / `pet` / `beauty` / stationery |
+
+A line that *looks* like food but carries no 8% mark is usually pet food. On a
+real receipt `コンボD もっちりチキン ¥679×3` read as chicken deli — but it was
+10%-taxed, and the footer's `10%対象 ¥2,166` equalled `679×3 + 129`, proving it
+was pet food (コンボ is 日本ペットフード). **Reconcile the tax subtotals; they
+settle these cases.**
+
+**5. Name keywords, after the tax check:**
+
+- チューハイ / 氷結 / -196 / ビール / ハイボール / 日本酒 / 焼酎 → `alcohol`
+- コンボ / シーバ / モンプチ / いなば / ちゅ〜る / 猫砂 / ペットシーツ → `pet`
+- 洗剤 / シャンプー / ティッシュ / 電池 / クリップ / 鏡 → `daily`
+- 薬 / 絆創膏 / マスク / サプリ / 湿布 → `medical`
+- everything else edible → `food`; genuinely unclear → `other`
+
+Keep alcohol out of `food` — mixing them inflates the 食費 line the user
+actually watches.
+
+## Procedure
+
+1. **Read the photo.** If the print is too small, say so and ask for a tighter
+   shot of the item list rather than guessing amounts.
+
+2. **Check for a duplicate before writing.** Read the collection and look for
+   the same `store` + `date` + total. This check — not the document id — is
+   what prevents double-importing.
+
+   ```
+   Artifact  action=read_db  url=<artifact>  db_op=list
+             collection=transactions  query={"limit":1000}
+             out_dir=<scratchpad>/verify
+   ```
+
+   Reading with `out_dir` saves each row to a file instead of dumping all of
+   them into the conversation; sum them with a script.
+
+3. **Balance the receipt before writing.** Sum your items and compare against
+   the printed 合計. They must match to the yen. If they do not, re-read —
+   a mismatch is almost always a missed discount line or a double-counted
+   quantity line. Never write rows that do not balance.
+
+4. **Build the documents** with `scripts/build_batch.py` (below) rather than
+   typing them — it derives `yearMonth`, `receiptId`, and the ids, and it
+   refuses to emit anything if a receipt does not balance.
+
+5. **Write in batches** of at most 50:
+
+   ```
+   Artifact  action=write_db  url=<artifact>  db_op=batch
+             writes=[{"op":"set","collection":"transactions",
+                      "doc_id":"rcpt-20260904-5080-01",
+                      "file_path":"<scratchpad>/docs/rcpt-20260904-5080-01.json"}, ...]
+   ```
+
+   `file_path` points at one JSON file per document, so Japanese item names are
+   never retyped into a tool call. A batch commits atomically.
+
+6. **Verify by reading back**, then report per-receipt and per-category totals.
+
+Document ids go `rcpt-<YYYYMMDD><総額>-<NN>` — content-derived, so a re-import
+of an identical receipt overwrites instead of duplicating. (The first import,
+2026-09-01〜09-04, predates this and uses `rcpt-20260904-<n>-<NN>`; leave those
+alone.)
+
+## Removing a bad import
+
+Delete by `receiptId` — read the collection, collect the ids sharing that
+`receiptId`, and batch `{"op":"delete",...}` them. Do not ask the user to clear
+rows by hand in the app.
+
+## Reporting back
+
+Give the user, in Japanese: per-receipt total, per-category breakdown, and an
+explicit note on anything the tax marks decided (pet food, alcohol) or any item
+you were unsure about. Confirm the totals matched the printed 合計.
