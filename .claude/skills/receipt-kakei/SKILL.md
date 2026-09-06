@@ -117,7 +117,18 @@ settle these cases.**
 - コンボ / シーバ / モンプチ / いなば / ちゅ〜る / 猫砂 / ペットシーツ → `pet`
 - 洗剤 / シャンプー / ティッシュ / 電池 / クリップ / 鏡 → `daily`
 - 薬 / 絆創膏 / マスク / サプリ / 湿布 → `medical`
-- everything else edible → `food`; genuinely unclear → `other`
+- everything else edible → `food`
+
+**When the name is unreadable and nothing identifies it, use `food`** — even on
+a 10% line. The user's standing instruction: 「私も分からないけど、食品に入れ
+といて」. Reserve `other` for items you *can* identify as non-food but that fit
+no category. Say in your report which items landed in `food` this way, so the
+user can correct them in the app.
+
+The tax mark still decides anything you *can* name — an unmarked コンボ or 氷結
+is pet food or alcohol, not food. This fallback is only for genuine unknowns,
+like `鹿児島市岡之原` (2026-09-02, ¥110 / ¥187, 外10, product code 3712 twice —
+possibly 鹿児島市指定ごみ袋, never confirmed).
 
 Keep alcohol out of `food` — mixing them inflates the 食費 line the user
 actually watches.
