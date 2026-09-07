@@ -90,11 +90,15 @@ item prices:
   actually paid.
 
 **Decide this from the footer of the receipt in front of you, never from the
-store name.** Both タイヨー and 業務スーパー have been observed printing 外税
-(業務スーパー 谷山店, 2026-09-07: 小計 ¥5,396 → 合計 ¥5,846). A receipt that
-prints a 小計 line differing from 合計 is 外税, full stop. The 2026-09-03 and
-09-04 imports predate this check and were taken as 内税 without verifying —
-treat their totals as unconfirmed.
+store name.** A `小計` that differs from `合計` means 外税, full stop; a footer
+that says `税込小計` is stating 内税 outright. Observed so far: タイヨー and
+業務スーパー print 外税 (業務スーパー 谷山店, 2026-09-07: 小計 ¥5,396 → 合計
+¥5,846), ダイレックス prints 内税 (2026-09-03: 税込小計 17品 ¥4,737 = 合計).
+Chains are not a reliable predictor — read the footer every time.
+
+The cheapest confirmation is the tax bands: each band total on a correct
+import equals the receipt's own `(税率N%対象額)`. The 09-03 and 09-04 imports
+were re-checked against the paper receipts this way and both matched exactly.
 
 For 外税, gross each line up so every tax band lands exactly on the band total
 the receipt already prints as `(税率8%対象額)` / `(税率10%対象額)` — those two
