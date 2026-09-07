@@ -84,10 +84,17 @@ at that amount, and drop the quantity line.
 item prices:
 
 - **内税** (item prices tax-included) — the item lines sum to 合計. Write them
-  as printed. 業務スーパー and ダイレックス print this way.
+  as printed.
 - **外税** (tax added at the bottom) — the item lines sum to **小計**, and
   合計 = 小計 + 外税額. Writing the printed prices under-records what was
-  actually paid. タイヨー prints this way.
+  actually paid.
+
+**Decide this from the footer of the receipt in front of you, never from the
+store name.** Both タイヨー and 業務スーパー have been observed printing 外税
+(業務スーパー 谷山店, 2026-09-07: 小計 ¥5,396 → 合計 ¥5,846). A receipt that
+prints a 小計 line differing from 合計 is 外税, full stop. The 2026-09-03 and
+09-04 imports predate this check and were taken as 内税 without verifying —
+treat their totals as unconfirmed.
 
 For 外税, gross each line up so every tax band lands exactly on the band total
 the receipt already prints as `(税率8%対象額)` / `(税率10%対象額)` — those two
