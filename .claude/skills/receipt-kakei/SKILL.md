@@ -77,10 +77,21 @@ row — subtract it from the preceding item.
 the line above; the amount printed on the item line is the total. Emit one row
 at that amount, and drop the quantity line.
 
-**3. Skip the footer.** 小計 / 合計 / 外税額 / 内消費税 / 買上点数 / お預り /
+**3. Repeated scans of one product become a single `名前 ×N` row.** A register
+prints a line per barcode scan, so ten of something fills the day's list with
+ten identical rows and buries everything else — the user asked for this
+("明らかに同じものなら✖️10でシンプルでいい"). `build_batch.py` does it: lines
+merge only when name, unit price AND category all match, and the row carries
+`qty` and `unitAmount` alongside the summed `amount`. Two 銀サケ at different
+weights are different rows and stay apart.
+
+> ダイレックス谷山中央店 2026-09-15: `アミノバイタルゼリー ¥118` ×10 →
+> one row, `アミノバイタルゼリー ×10`, **¥1,180**. 20 items became 10 rows.
+
+**4. Skip the footer.** 小計 / 合計 / 外税額 / 内消費税 / 買上点数 / お預り /
 お釣り / クレジット / card numbers / 登録番号 / 電話番号 are never items.
 
-**4. 外税 receipts must be grossed up.** Check the footer before trusting the
+**5. 外税 receipts must be grossed up.** Check the footer before trusting the
 item prices:
 
 - **内税** (item prices tax-included) — the item lines sum to 合計. Write them
@@ -108,7 +119,7 @@ figures sum to 合計, so they are the target, not something to compute.
 > タイヨー慈眼寺店 2026-09-02: 小計 ¥2,793 → 合計 ¥3,021. The 8% lines
 > (¥2,523 pre-tax) became ¥2,724 and the 10% lines (¥270) became ¥297.
 
-**5. The tax mark is evidence, not decoration.** This is the single most
+**6. The tax mark is evidence, not decoration.** This is the single most
 reliable signal on a Japanese receipt:
 
 | Mark | Rate | Means |
@@ -122,7 +133,7 @@ real receipt `コンボD もっちりチキン ¥679×3` read as chicken deli �
 was pet food (コンボ is 日本ペットフード). **Reconcile the tax subtotals; they
 settle these cases.**
 
-**6. Name keywords, after the tax check:**
+**7. Name keywords, after the tax check:**
 
 - チューハイ / 氷結 / -196 / ビール / ハイボール / 日本酒 / 焼酎 → `alcohol`
 - コンボ / シーバ / モンプチ / いなば / ちゅ〜る / 猫砂 / ペットシーツ → `pet`
@@ -164,7 +175,7 @@ actually watches.
 
 3. **Balance the receipt before writing.** Sum your items and compare against
    the printed 合計 — on a 外税 receipt, first sum against 小計, then gross up
-   per rule 4. They must match to the yen. If they do not, re-read: a mismatch
+   per rule 5. They must match to the yen. If they do not, re-read: a mismatch
    is almost always a missed discount line, a double-counted quantity line, or
    an unnoticed 外税 footer. Never write rows that do not balance. 買上点数 is
    a free second check on your item count.

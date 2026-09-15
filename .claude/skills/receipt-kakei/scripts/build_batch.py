@@ -33,6 +33,40 @@ VALID_INCOME = {"salary", "side", "allowance", "other_income"}
 BATCH_MAX = 50
 
 
+def merge_identical(items):
+    """Collapse repeated scans of the same product into one `名前 ×N` row.
+
+    A register prints one line per barcode scan, so buying ten of something
+    fills the day's list with ten identical rows and buries everything else.
+    Only lines matching on name, unit price AND category merge — two 銀サケ at
+    different weights are genuinely different rows and stay apart. First
+    occurrence keeps its position, and the yen total is unchanged.
+    """
+    order, groups = [], {}
+    for i in items:
+        key = (i["name"], int(i["amount"]), i["category"])
+        if key not in groups:
+            groups[key] = []
+            order.append(key)
+        groups[key].append(i)
+
+    out = []
+    for key in order:
+        members = groups[key]
+        name, unit, category = key
+        if len(members) == 1:
+            out.append({"name": name, "amount": unit, "category": category})
+        else:
+            out.append({
+                "name": "%s ×%d" % (name, len(members)),
+                "amount": unit * len(members),
+                "category": category,
+                "qty": len(members),
+                "unitAmount": unit,
+            })
+    return out
+
+
 def build(receipts, out_dir, created_at, extra_categories=()):
     docs_dir = os.path.join(out_dir, "docs")
     os.makedirs(docs_dir, exist_ok=True)
@@ -66,7 +100,7 @@ def build(receipts, out_dir, created_at, extra_categories=()):
                 )
 
         receipt_id = "rcpt-%s%d" % (date.replace("-", ""), subtotal)
-        for n, i in enumerate(items, 1):
+        for n, i in enumerate(merge_identical(items), 1):
             doc_id = "%s-%02d" % (receipt_id, n)
             doc = {
                 "type": r.get("type", "expense"),
@@ -80,6 +114,9 @@ def build(receipts, out_dir, created_at, extra_categories=()):
                 "source": "receipt",
                 "createdAt": created_at,
             }
+            if i.get("qty", 1) > 1:
+                doc["qty"] = i["qty"]
+                doc["unitAmount"] = i["unitAmount"]
             path = os.path.join(docs_dir, doc_id + ".json")
             with open(path, "w", encoding="utf-8") as fh:
                 json.dump(doc, fh, ensure_ascii=False)
