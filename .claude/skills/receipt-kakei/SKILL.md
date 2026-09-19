@@ -75,7 +75,11 @@ row — subtract it from the preceding item.
 
 **2. Quantity lines are already totaled.** A line like `(3個 x @88)` restates
 the line above; the amount printed on the item line is the total. Emit one row
-at that amount, and drop the quantity line.
+at that amount, and drop the quantity line — but carry the count into the memo
+as `名前 ×N`, the same shape rule 3 produces, so the app shows why one row costs
+¥1,166 (ニシムタ伊集院店 2026-09-19: `アミノVガッ 特` `( 10個 x @108 )` →
+`アミノVガッ 特 ×10`). Do not set `qty`/`unitAmount` here: on a 外税 receipt the
+grossed-up unit price is not a whole yen.
 
 **3. Repeated scans of one product become a single `名前 ×N` row.** A register
 prints a line per barcode scan, so ten of something fills the day's list with
@@ -102,9 +106,10 @@ item prices:
 
 **Decide this from the footer of the receipt in front of you, never from the
 store name.** A `小計` that differs from `合計` means 外税, full stop; a footer
-that says `税込小計` is stating 内税 outright. Observed so far: タイヨー and
-業務スーパー print 外税 (業務スーパー 谷山店, 2026-09-07: 小計 ¥5,396 → 合計
-¥5,846), ダイレックス prints 内税 (2026-09-03: 税込小計 17品 ¥4,737 = 合計).
+that says `税込小計` is stating 内税 outright. Observed so far: タイヨー,
+業務スーパー and ニシムタ print 外税 (業務スーパー 谷山店, 2026-09-07: 小計
+¥5,396 → 合計 ¥5,846; ニシムタ伊集院店, 2026-09-19: 小計 ¥3,864 → 合計 ¥4,173),
+ダイレックス prints 内税 (2026-09-03: 税込小計 17品 ¥4,737 = 合計).
 Chains are not a reliable predictor — read the footer every time.
 
 The cheapest confirmation is the tax bands: each band total on a correct
@@ -124,8 +129,12 @@ reliable signal on a Japanese receipt:
 
 | Mark | Rate | Means |
 |---|---|---|
-| `外8` `内8` `◆` `※` | 8% 軽減税率 | food & drink for people → `food` |
+| `外8` `内8` `◆` `※` `*` | 8% 軽減税率 | food & drink for people → `food` |
 | `外10` or no mark | 10% | not human food → `alcohol` / `daily` / `pet` / `beauty` / stationery |
+
+Each chain picks its own glyph and defines it in the footer — ニシムタ prints
+`*` and explains 「「*」は軽減税率対象商品です」. Read that legend rather than
+assuming the mark you saw on the last receipt.
 
 A line that *looks* like food but carries no 8% mark is usually pet food. On a
 real receipt `コンボD もっちりチキン ¥679×3` read as chicken deli — but it was
