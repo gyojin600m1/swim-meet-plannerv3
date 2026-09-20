@@ -73,6 +73,14 @@ row — subtract it from the preceding item.
 
 > `国産塩さば切身 ¥298` then `割引20% -60` → one row, `国産塩さば切身`, **238**.
 
+A bundle discount prints as a pair and must be subtracted **once**: タイヨー
+writes `M001)44_8ガツ_004_ -46` and then `( 3点 1回) -46`, which restates the
+same ¥46 as "3 items, 1 time" — not a second ¥46. It also belongs to the whole
+`M001` group, not to the line directly above it, so fold it into the merged
+`名前 ×N` row (`アサヒ M001特` ¥248×3 − 46 → `アサヒ M001特 ×3` **¥698**). The
+tax band settles it: that receipt's `外税10%対象額 ¥1,060` only works with one
+deduction.
+
 **2. Quantity lines are already totaled.** A line like `(3個 x @88)` restates
 the line above; the amount printed on the item line is the total. Emit one row
 at that amount, and drop the quantity line — but carry the count into the memo
