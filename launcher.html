@@ -1,0 +1,547 @@
+<title>水泳アプリ ランチャー</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700;900&family=Roboto+Mono:wght@500;700&display=swap">
+<style>
+  :root{
+    --ink:#0A1E26;
+    --ground:#EDF3F4;
+    --card:#FFFFFF;
+    --line:rgba(10,30,38,.11);
+    --muted:#5F7C85;
+    --accent:#0D7A8A;
+    --accent-soft:rgba(13,122,138,.10);
+    --bright:#1FB6CC;
+    --lane:#C9741F;
+    --lane-soft:rgba(201,116,31,.12);
+    --shadow:0 1px 2px rgba(10,30,38,.05), 0 6px 20px rgba(10,30,38,.06);
+    --r:14px;
+    --jp:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+    --mono:"Roboto Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ink:#E4F0F2; --ground:#071317; --card:#0F2128; --line:rgba(228,240,242,.13);
+      --muted:#8CA7AF; --accent:#3FC2D4; --accent-soft:rgba(63,194,212,.14);
+      --bright:#5BD8E8; --lane:#EDA45A; --lane-soft:rgba(237,164,90,.16);
+      --shadow:0 1px 2px rgba(0,0,0,.45), 0 6px 20px rgba(0,0,0,.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ink:#E4F0F2; --ground:#071317; --card:#0F2128; --line:rgba(228,240,242,.13);
+    --muted:#8CA7AF; --accent:#3FC2D4; --accent-soft:rgba(63,194,212,.14);
+    --bright:#5BD8E8; --lane:#EDA45A; --lane-soft:rgba(237,164,90,.16);
+    --shadow:0 1px 2px rgba(0,0,0,.45), 0 6px 20px rgba(0,0,0,.35);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0; background:var(--ground); color:var(--ink);
+    font-family:var(--jp); font-size:15px; line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{width:100%; max-width:720px; margin:0 auto; padding:0 16px; padding-block:0 40px}
+
+  /* ---------- header ---------- */
+  header{display:flex; align-items:center; gap:12px; padding-block:18px 12px}
+  .mark{flex:none; width:34px; height:34px; border-radius:9px; background:var(--accent);
+    display:grid; align-content:center; gap:3px; padding:8px 6px}
+  .mark i{display:block; height:2px; border-radius:2px; background:#fff; opacity:.9}
+  .mark i:nth-child(2){background:var(--lane); opacity:1}
+  h1{margin:0; font-size:19px; font-weight:900; letter-spacing:-.01em; line-height:1.2}
+  .sub{margin:2px 0 0; font-family:var(--mono); font-size:11px; color:var(--muted);
+    letter-spacing:.04em; font-weight:500}
+  header .grow{flex:1}
+  .add{
+    flex:none; border:0; cursor:pointer; font-family:var(--jp); font-weight:700; font-size:14px;
+    background:var(--accent); color:#fff; padding:10px 15px; border-radius:999px;
+    min-height:44px; box-shadow:var(--shadow);
+  }
+
+  /* ---------- search ---------- */
+  .searchbar{
+    position:sticky; top:env(safe-area-inset-top, 0px); z-index:20;
+    background:var(--ground); padding-block:6px 10px;
+  }
+  .searchbar .field{position:relative}
+  .searchbar svg{position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted)}
+  #q{
+    width:100%; font-family:var(--jp); font-size:16px; color:var(--ink);
+    background:var(--card); border:1px solid var(--line); border-radius:999px;
+    padding:13px 44px 13px 42px; min-height:50px; box-shadow:var(--shadow);
+  }
+  #q:focus{outline:2px solid var(--bright); outline-offset:1px; border-color:transparent}
+  #q::placeholder{color:var(--muted)}
+  .clearq{
+    position:absolute; right:6px; top:50%; transform:translateY(-50%);
+    border:0; background:transparent; color:var(--muted); cursor:pointer;
+    width:38px; height:38px; border-radius:50%; font-size:18px; line-height:1;
+  }
+
+  /* ---------- chips ---------- */
+  .chips{display:flex; gap:7px; overflow-x:auto; padding-block:2px 12px; scrollbar-width:none}
+  .chips::-webkit-scrollbar{display:none}
+  .chips button{
+    flex:none; cursor:pointer; font-family:var(--jp); font-size:13px; font-weight:700;
+    background:var(--card); color:var(--muted); border:1px solid var(--line);
+    padding:8px 13px; border-radius:999px; min-height:38px;
+  }
+  .chips button[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:#fff}
+  .chips .n{font-family:var(--mono); font-size:11px; opacity:.75; margin-left:5px}
+
+  /* ---------- status ---------- */
+  .status{
+    display:flex; align-items:center; gap:7px; font-size:12px; color:var(--muted);
+    font-family:var(--mono); letter-spacing:.02em; padding-block:0 12px;
+  }
+  .dot{width:7px; height:7px; border-radius:50%; background:var(--muted); flex:none}
+  .dot.ok{background:var(--accent)}
+  .dot.warn{background:var(--lane)}
+
+  /* ---------- list ---------- */
+  .group{margin-block:0 22px}
+  .gtitle{
+    display:flex; align-items:baseline; gap:8px; margin:0 0 9px; padding-left:2px;
+    font-size:12px; font-weight:700; letter-spacing:.09em; color:var(--muted);
+  }
+  .gtitle .n{font-family:var(--mono); font-size:11px; font-weight:500}
+  .rows{display:flex; flex-direction:column; gap:8px}
+
+  .row{
+    display:grid; grid-template-columns:44px minmax(0,1fr) 44px; align-items:stretch;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--r);
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .row.fav{border-color:var(--lane)}
+  .row>*{background:transparent; border:0; font-family:var(--jp); color:inherit}
+  .star{cursor:pointer; font-size:17px; line-height:1; color:var(--line); padding:0; min-height:58px}
+  .star[aria-pressed="true"]{color:var(--lane)}
+  .open{
+    display:flex; flex-direction:column; justify-content:center; gap:4px;
+    padding:11px 4px 11px 0; text-align:left; text-decoration:none; color:inherit;
+    cursor:pointer; min-width:0; min-height:58px;
+  }
+  .open:focus-visible{outline:2px solid var(--bright); outline-offset:-2px}
+  .nm{font-weight:700; font-size:15px; line-height:1.35; overflow-wrap:anywhere}
+  .meta{display:flex; align-items:center; gap:6px; flex-wrap:wrap}
+  .tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.03em; padding:2px 7px;
+    border-radius:5px; background:var(--accent-soft); color:var(--accent); flex:none;
+  }
+  .tag.none{background:var(--lane-soft); color:var(--lane)}
+  .repo{font-family:var(--mono); font-size:10.5px; color:var(--muted);
+    overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0}
+  .pencil{cursor:pointer; color:var(--muted); font-size:14px; padding:0; min-height:58px}
+  .pencil:hover{color:var(--accent)}
+
+  .empty{
+    text-align:center; color:var(--muted); font-size:14px; padding:38px 16px;
+    background:var(--card); border:1px dashed var(--line); border-radius:var(--r);
+  }
+  .skel{height:58px; border-radius:var(--r); background:var(--card);
+    border:1px solid var(--line); opacity:.55}
+
+  /* ---------- sheet ---------- */
+  .scrim{
+    position:fixed; inset:0; background:rgba(7,19,23,.5); z-index:60;
+    display:flex; align-items:flex-end; justify-content:center;
+  }
+  .sheet{
+    width:100%; max-width:560px; background:var(--card); color:var(--ink);
+    border-radius:20px 20px 0 0; padding:20px 18px;
+    padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px));
+    max-height:88vh; overflow-y:auto;
+  }
+  @media (min-width:600px){
+    .scrim{align-items:center}
+    .sheet{border-radius:20px}
+  }
+  .sheet h2{margin:0 0 16px; font-size:17px; font-weight:900}
+  .f{display:flex; flex-direction:column; gap:6px; margin-bottom:14px}
+  .f label{font-size:11.5px; font-weight:700; letter-spacing:.05em; color:var(--muted)}
+  .f input, .f select{
+    width:100%; font-family:var(--jp); font-size:16px; color:var(--ink);
+    background:var(--ground); border:1px solid var(--line);
+    border-radius:10px; padding:12px; min-height:48px;
+  }
+  .f input:focus, .f select:focus{outline:2px solid var(--bright); outline-offset:1px}
+  .f .hint{font-size:11.5px; color:var(--muted); line-height:1.5}
+  .acts{display:flex; gap:9px; margin-top:18px}
+  .acts button{
+    cursor:pointer; font-family:var(--jp); font-weight:700; font-size:15px;
+    border-radius:11px; padding:13px; min-height:50px; border:1px solid var(--line);
+  }
+  .acts .save{flex:1; background:var(--accent); color:#fff; border-color:var(--accent)}
+  .acts .cancel{flex:none; background:transparent; color:var(--muted)}
+  .acts .del{flex:none; background:transparent; color:var(--lane); border-color:var(--lane-soft)}
+
+  .toast{
+    position:fixed; left:50%; bottom:calc(22px + env(safe-area-inset-bottom, 0px));
+    transform:translateX(-50%) translateY(14px); z-index:80;
+    background:var(--ink); color:var(--ground); font-size:13.5px; font-weight:700;
+    padding:11px 18px; border-radius:999px; opacity:0; pointer-events:none;
+    transition:opacity .18s ease, transform .18s ease;
+  }
+  .toast.on{opacity:1; transform:translateX(-50%) translateY(0)}
+  @media (prefers-reduced-motion:reduce){ .toast{transition:none} }
+</style>
+
+<div class="wrap">
+  <header>
+    <span class="mark" aria-hidden="true"><i></i><i></i><i></i></span>
+    <div>
+      <h1>水泳アプリ ランチャー</h1>
+      <p class="sub" id="count">読み込み中…</p>
+    </div>
+    <span class="grow"></span>
+    <button class="add" id="add">＋ 追加</button>
+  </header>
+
+  <div class="searchbar">
+    <div class="field">
+      <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="大会名で検索" autocomplete="off" enterkeyhint="search">
+      <button class="clearq" id="clearq" hidden aria-label="検索をクリア">×</button>
+    </div>
+  </div>
+
+  <nav class="chips" id="chips"></nav>
+
+  <p class="status"><span class="dot" id="dot"></span><span id="statusText">接続中…</span></p>
+
+  <main id="list">
+    <div class="rows">
+      <div class="skel"></div><div class="skel"></div><div class="skel"></div><div class="skel"></div>
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+  "use strict";
+
+  var CATS = [
+    ["entry",   "エントリー"],
+    ["results", "結果"],
+    ["checker", "チェッカー"],
+    ["plan",    "当日"],
+    ["other",   "その他"]
+  ];
+  var CATMAP = {}; CATS.forEach(function(c){ CATMAP[c[0]] = c[1]; });
+
+  var LS_LOCAL = "swimLauncher.local.v2";
+  var LS_FILTER = "swimLauncher.filter.v1";
+
+  var db = null, items = [], ready = false;
+  var q = "", cat = "all", unsub = null;
+
+  var listEl = document.getElementById("list");
+  var countEl = document.getElementById("count");
+  var chipsEl = document.getElementById("chips");
+  var qEl = document.getElementById("q");
+  var clearEl = document.getElementById("clearq");
+  var dotEl = document.getElementById("dot");
+  var statusEl = document.getElementById("statusText");
+  var toastEl = document.getElementById("toast");
+
+  function esc(s){
+    return String(s == null ? "" : s)
+      .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+      .replace(/"/g,"&quot;").replace(/'/g,"&#39;");
+  }
+  function safeUrl(u){
+    u = String(u || "").trim();
+    if(!u) return "";
+    if(/^https?:\/\//i.test(u)) return u;
+    if(/^[\w.-]+\.[a-z]{2,}(\/|$)/i.test(u)) return "https://" + u;
+    return "";
+  }
+  function toast(msg){
+    toastEl.textContent = msg;
+    toastEl.classList.add("on");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ toastEl.classList.remove("on"); }, 1900);
+  }
+  function setStatus(cls, text){
+    dotEl.className = "dot " + cls;
+    statusEl.textContent = text;
+  }
+
+  /* ---------- local fallback ---------- */
+  function loadLocal(){
+    try{ return JSON.parse(localStorage.getItem(LS_LOCAL)) || []; }catch(e){ return []; }
+  }
+  function saveLocal(){
+    try{ localStorage.setItem(LS_LOCAL, JSON.stringify(items)); }catch(e){}
+  }
+  try{
+    var sf = localStorage.getItem(LS_FILTER);
+    if(sf) cat = sf;
+  }catch(e){}
+
+  /* ---------- filtering ---------- */
+  function visible(){
+    var needle = q.trim().toLowerCase();
+    return items.filter(function(it){
+      if(cat !== "all" && (it.cat || "other") !== cat) return false;
+      if(!needle) return true;
+      var hay = [it.name, it.repo, CATMAP[it.cat] || "", it.url].join(" ").toLowerCase();
+      return hay.indexOf(needle) !== -1;
+    }).sort(function(a,b){
+      if(!!b.fav !== !!a.fav) return b.fav ? 1 : -1;
+      return String(a.name || "").localeCompare(String(b.name || ""), "ja");
+    });
+  }
+
+  /* ---------- render ---------- */
+  function renderChips(){
+    var counts = { all: items.length };
+    CATS.forEach(function(c){ counts[c[0]] = 0; });
+    items.forEach(function(it){
+      var k = it.cat || "other";
+      if(counts[k] === undefined) counts[k] = 0;
+      counts[k]++;
+    });
+    var html = '<button data-cat="all" aria-pressed="' + (cat === "all") + '">すべて<span class="n">' + counts.all + '</span></button>';
+    CATS.forEach(function(c){
+      if(!counts[c[0]]) return;
+      html += '<button data-cat="' + c[0] + '" aria-pressed="' + (cat === c[0]) + '">' + esc(c[1]) + '<span class="n">' + counts[c[0]] + '</span></button>';
+    });
+    chipsEl.innerHTML = html;
+  }
+
+  function rowHtml(it){
+    var url = safeUrl(it.url);
+    var tag = url
+      ? '<span class="tag">' + esc(CATMAP[it.cat] || "その他") + '</span>'
+      : '<span class="tag none">URL未設定</span>';
+    var repo = it.repo ? '<span class="repo">' + esc(it.repo) + '</span>' : "";
+    var inner =
+      '<span class="nm">' + esc(it.name || "(名前なし)") + '</span>' +
+      '<span class="meta">' + tag + repo + '</span>';
+    var opener = url
+      ? '<a class="open" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>'
+      : '<button class="open" data-act="edit" data-id="' + esc(it.id) + '">' + inner + '</button>';
+    return '<article class="row' + (it.fav ? " fav" : "") + '">' +
+      '<button class="star" data-act="fav" data-id="' + esc(it.id) + '" aria-pressed="' + (!!it.fav) +
+        '" aria-label="お気に入り">' + (it.fav ? "★" : "☆") + '</button>' +
+      opener +
+      '<button class="pencil" data-act="edit" data-id="' + esc(it.id) + '" aria-label="編集">✎</button>' +
+    '</article>';
+  }
+
+  function render(){
+    renderChips();
+    var rows = visible();
+    countEl.textContent = items.length + " apps / " + rows.length + " shown";
+
+    if(!rows.length){
+      listEl.innerHTML = '<div class="empty">' +
+        (items.length ? "該当する大会がありません。" : "まだ登録がありません。右上の「＋ 追加」から登録できます。") +
+        '</div>';
+      return;
+    }
+
+    if(q.trim() || cat !== "all"){
+      listEl.innerHTML = '<div class="rows">' + rows.map(rowHtml).join("") + '</div>';
+      return;
+    }
+
+    var favs = rows.filter(function(r){ return r.fav; });
+    var html = "";
+    if(favs.length){
+      html += '<section class="group"><h2 class="gtitle">よく使う<span class="n">' + favs.length + '</span></h2>' +
+              '<div class="rows">' + favs.map(rowHtml).join("") + '</div></section>';
+    }
+    CATS.forEach(function(c){
+      var g = rows.filter(function(r){ return (r.cat || "other") === c[0] && !r.fav; });
+      if(!g.length) return;
+      html += '<section class="group"><h2 class="gtitle">' + esc(c[1]) + '<span class="n">' + g.length + '</span></h2>' +
+              '<div class="rows">' + g.map(rowHtml).join("") + '</div></section>';
+    });
+    listEl.innerHTML = html;
+  }
+
+  /* ---------- writes ---------- */
+  function body(it){
+    return {
+      name: String(it.name || ""),
+      url: String(it.url || ""),
+      cat: String(it.cat || "other"),
+      repo: String(it.repo || ""),
+      vis: String(it.vis || ""),
+      fav: !!it.fav
+    };
+  }
+
+  async function saveItem(id, data){
+    if(db){
+      try{
+        if(id) await db.collection("apps").doc(id).set(body(data));
+        else await db.collection("apps").add(body(data));
+      }catch(e){
+        toast(e && e.code === "invalid_argument" ? "保存できませんでした（権限）" : "保存に失敗しました");
+        throw e;
+      }
+      return;
+    }
+    if(id){
+      items = items.map(function(x){ return x.id === id ? Object.assign({}, x, body(data), {id:id}) : x; });
+    }else{
+      items = items.concat([Object.assign({id:"l" + Date.now().toString(36)}, body(data))]);
+    }
+    saveLocal(); render();
+  }
+
+  async function removeItem(id){
+    if(db){
+      try{ await db.collection("apps").doc(id).delete(); }
+      catch(e){ toast("削除に失敗しました"); throw e; }
+      return;
+    }
+    items = items.filter(function(x){ return x.id !== id; });
+    saveLocal(); render();
+  }
+
+  async function toggleFav(id){
+    var it = items.filter(function(x){ return x.id === id; })[0];
+    if(!it) return;
+    var next = !it.fav;
+    if(db){
+      try{ await db.collection("apps").doc(id).update({ fav: next }); }
+      catch(e){ toast("更新に失敗しました"); }
+      return;
+    }
+    it.fav = next; saveLocal(); render();
+  }
+
+  /* ---------- sheet ---------- */
+  var scrim = null;
+  function closeSheet(){
+    if(scrim){ scrim.remove(); scrim = null; document.removeEventListener("keydown", onEsc); }
+  }
+  function onEsc(e){ if(e.key === "Escape") closeSheet(); }
+
+  function openSheet(id){
+    var it = id ? items.filter(function(x){ return x.id === id; })[0] : null;
+    if(id && !it) return;
+    var isNew = !it;
+    it = it || { name:"", url:"", cat:"entry", repo:"", vis:"", fav:false };
+
+    closeSheet();
+    scrim = document.createElement("div");
+    scrim.className = "scrim";
+    scrim.innerHTML =
+      '<div class="sheet" role="dialog" aria-modal="true" aria-label="' + (isNew ? "アプリを追加" : "アプリを編集") + '">' +
+        '<h2>' + (isNew ? "アプリを追加" : "アプリを編集") + '</h2>' +
+        '<div class="f"><label for="s-name">大会名 / アプリ名</label>' +
+          '<input id="s-name" type="text" value="' + esc(it.name) + '" placeholder="例: 九州ジュニア 2026"></div>' +
+        '<div class="f"><label for="s-url">URL</label>' +
+          '<input id="s-url" type="url" inputmode="url" autocapitalize="off" spellcheck="false" value="' + esc(it.url) + '" placeholder="https://…">' +
+          '<span class="hint">スマホから開ける公開URLを入れます。空欄のままでも登録できます。</span></div>' +
+        '<div class="f"><label for="s-cat">カテゴリ</label><select id="s-cat">' +
+          CATS.map(function(c){
+            return '<option value="' + c[0] + '"' + ((it.cat || "other") === c[0] ? " selected" : "") + '>' + esc(c[1]) + '</option>';
+          }).join("") +
+        '</select></div>' +
+        '<div class="f"><label for="s-repo">メモ / リポジトリ名</label>' +
+          '<input id="s-repo" type="text" autocapitalize="off" spellcheck="false" value="' + esc(it.repo) + '" placeholder="gyojin600m1/…"></div>' +
+        '<div class="acts">' +
+          '<button class="save" id="s-save">保存</button>' +
+          (isNew ? "" : '<button class="del" id="s-del">削除</button>') +
+          '<button class="cancel" id="s-cancel">閉じる</button>' +
+        '</div>' +
+      '</div>';
+    document.body.appendChild(scrim);
+    document.addEventListener("keydown", onEsc);
+
+    scrim.addEventListener("click", function(e){ if(e.target === scrim) closeSheet(); });
+    scrim.querySelector("#s-cancel").addEventListener("click", closeSheet);
+    scrim.querySelector("#s-save").addEventListener("click", async function(){
+      var name = scrim.querySelector("#s-name").value.trim();
+      if(!name){ toast("名前を入力してください"); return; }
+      var data = {
+        name: name,
+        url: scrim.querySelector("#s-url").value.trim(),
+        cat: scrim.querySelector("#s-cat").value,
+        repo: scrim.querySelector("#s-repo").value.trim(),
+        vis: it.vis,
+        fav: !!it.fav
+      };
+      try{ await saveItem(id, data); closeSheet(); toast(isNew ? "追加しました" : "保存しました"); }
+      catch(e){}
+    });
+    var delBtn = scrim.querySelector("#s-del");
+    if(delBtn){
+      delBtn.addEventListener("click", async function(){
+        if(!confirm("「" + it.name + "」を削除しますか？")) return;
+        try{ await removeItem(id); closeSheet(); toast("削除しました"); }catch(e){}
+      });
+    }
+    setTimeout(function(){ var n = scrim && scrim.querySelector("#s-name"); if(n) n.focus(); }, 40);
+  }
+
+  /* ---------- events ---------- */
+  listEl.addEventListener("click", function(e){
+    var btn = e.target.closest ? e.target.closest("[data-act]") : null;
+    if(!btn) return;
+    var act = btn.getAttribute("data-act");
+    var id = btn.getAttribute("data-id");
+    if(act === "fav") toggleFav(id);
+    else if(act === "edit") openSheet(id);
+  });
+
+  chipsEl.addEventListener("click", function(e){
+    var btn = e.target.closest ? e.target.closest("[data-cat]") : null;
+    if(!btn) return;
+    cat = btn.getAttribute("data-cat");
+    try{ localStorage.setItem(LS_FILTER, cat); }catch(err){}
+    render();
+    window.scrollTo({ top:0, behavior:"smooth" });
+  });
+
+  qEl.addEventListener("input", function(){
+    q = qEl.value;
+    clearEl.hidden = !q;
+    render();
+  });
+  clearEl.addEventListener("click", function(){
+    qEl.value = ""; q = ""; clearEl.hidden = true; render(); qEl.focus();
+  });
+  document.getElementById("add").addEventListener("click", function(){ openSheet(null); });
+
+  /* ---------- boot ---------- */
+  (async function boot(){
+    try{
+      db = (window.claude && window.claude.use) ? await window.claude.use("db") : null;
+    }catch(e){ db = null; }
+
+    if(db){
+      setStatus("ok", "同期中 — Mac・スマホで共通");
+      unsub = db.collection("apps").onSnapshot(function(snap){
+        items = snap.docs.map(function(d){
+          var o = d.data() || {};
+          return {
+            id: d.id, name: o.name, url: o.url, cat: o.cat,
+            repo: o.repo, vis: o.vis, fav: !!o.fav
+          };
+        });
+        ready = true;
+        render();
+      }, function(err){
+        setStatus("warn", "同期エラー — 再読み込みしてください");
+      });
+    }else{
+      items = loadLocal();
+      ready = true;
+      setStatus("warn", "この端末のみ保存（同期なし）");
+      render();
+    }
+
+    setTimeout(function(){
+      if(!ready){ items = loadLocal(); setStatus("warn", "この端末のみ保存（同期なし）"); render(); }
+    }, 11000);
+  })();
+})();
+</script>
