@@ -128,6 +128,12 @@
     border-radius:5px; background:var(--accent-soft); color:var(--accent); flex:none;
   }
   .tag.none{background:var(--lane-soft); color:var(--lane)}
+  .date{
+    font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.02em;
+    padding:2px 7px; border-radius:5px; flex:none;
+    background:var(--lane-soft); color:var(--lane);
+  }
+  .date.approx{background:transparent; color:var(--muted); padding-inline:0}
   .repo{font-family:var(--mono); font-size:10.5px; color:var(--muted);
     overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0}
   .pencil{cursor:pointer; color:var(--muted); font-size:14px; padding:0; min-height:58px}
@@ -229,6 +235,8 @@
     ["other",   "その他"]
   ];
   var CATMAP = {}; CATS.forEach(function(c){ CATMAP[c[0]] = c[1]; });
+  /* 知らないカテゴリ名でも行が消えないように「その他」へ寄せる */
+  function normCat(c){ return CATMAP[c] ? c : "other"; }
 
   var LS_LOCAL = "swimLauncher.local.v2";
   var LS_FILTER = "swimLauncher.filter.v1";
@@ -284,14 +292,33 @@
   function visible(){
     var needle = q.trim().toLowerCase();
     return items.filter(function(it){
-      if(cat !== "all" && (it.cat || "other") !== cat) return false;
+      if(cat !== "all" && normCat(it.cat) !== cat) return false;
       if(!needle) return true;
-      var hay = [it.name, it.repo, CATMAP[it.cat] || "", it.url].join(" ").toLowerCase();
+      var hay = [it.name, it.repo, CATMAP[normCat(it.cat)] || "", it.url,
+                 it.date, dateLabel(it.date)].join(" ").toLowerCase();
       return hay.indexOf(needle) !== -1;
-    }).sort(function(a,b){
-      if(!!b.fav !== !!a.fav) return b.fav ? 1 : -1;
-      return String(a.name || "").localeCompare(String(b.name || ""), "ja");
-    });
+    }).sort(byDateDesc);
+  }
+
+  /* 大会日付の新しい順。日付なしは最後。同じ日付なら名前順 */
+  function byDateDesc(a, b){
+    if(!!b.fav !== !!a.fav) return b.fav ? 1 : -1;
+    var da = String(a.date || ""), dbb = String(b.date || "");
+    if(da !== dbb){
+      if(!da) return 1;
+      if(!dbb) return -1;
+      return da < dbb ? 1 : -1;
+    }
+    return String(a.name || "").localeCompare(String(b.name || ""), "ja");
+  }
+
+  /* 2026-09-13 -> 9/13、年が変わるところだけ 2025年 を添える */
+  function dateLabel(iso){
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(iso || ""));
+    if(!m) return "";
+    var now = new Date();
+    var y = +m[1], mo = +m[2], d = +m[3];
+    return (y === now.getFullYear() ? "" : y + "/") + mo + "/" + d;
   }
 
   /* ---------- render ---------- */
@@ -299,9 +326,7 @@
     var counts = { all: items.length };
     CATS.forEach(function(c){ counts[c[0]] = 0; });
     items.forEach(function(it){
-      var k = it.cat || "other";
-      if(counts[k] === undefined) counts[k] = 0;
-      counts[k]++;
+      counts[normCat(it.cat)]++;
     });
     var html = '<button data-cat="all" aria-pressed="' + (cat === "all") + '">すべて<span class="n">' + counts.all + '</span></button>';
     CATS.forEach(function(c){
@@ -314,12 +339,16 @@
   function rowHtml(it){
     var url = safeUrl(it.url);
     var tag = url
-      ? '<span class="tag">' + esc(CATMAP[it.cat] || "その他") + '</span>'
+      ? '<span class="tag">' + esc(CATMAP[normCat(it.cat)]) + '</span>'
       : '<span class="tag none">URL未設定</span>';
     var repo = it.repo ? '<span class="repo">' + esc(it.repo) + '</span>' : "";
+    var dl = dateLabel(it.date);
+    var date = dl
+      ? '<span class="date' + (it.dateApprox ? " approx" : "") + '">' + esc(dl) + (it.dateApprox ? " 頃" : "") + '</span>'
+      : "";
     var inner =
       '<span class="nm">' + esc(it.name || "(名前なし)") + '</span>' +
-      '<span class="meta">' + tag + repo + '</span>';
+      '<span class="meta">' + date + tag + repo + '</span>';
     var opener = url
       ? '<a class="open" href="' + esc(url) + '" target="_blank" rel="noopener noreferrer">' + inner + '</a>'
       : '<button class="open" data-act="edit" data-id="' + esc(it.id) + '">' + inner + '</button>';
@@ -355,7 +384,7 @@
               '<div class="rows">' + favs.map(rowHtml).join("") + '</div></section>';
     }
     CATS.forEach(function(c){
-      var g = rows.filter(function(r){ return (r.cat || "other") === c[0] && !r.fav; });
+      var g = rows.filter(function(r){ return normCat(r.cat) === c[0] && !r.fav; });
       if(!g.length) return;
       html += '<section class="group"><h2 class="gtitle">' + esc(c[1]) + '<span class="n">' + g.length + '</span></h2>' +
               '<div class="rows">' + g.map(rowHtml).join("") + '</div></section>';
@@ -371,7 +400,9 @@
       cat: String(it.cat || "other"),
       repo: String(it.repo || ""),
       vis: String(it.vis || ""),
-      fav: !!it.fav
+      fav: !!it.fav,
+      date: String(it.date || ""),
+      dateApprox: !!it.dateApprox
     };
   }
 
@@ -427,7 +458,7 @@
     var it = id ? items.filter(function(x){ return x.id === id; })[0] : null;
     if(id && !it) return;
     var isNew = !it;
-    it = it || { name:"", url:"", cat:"entry", repo:"", vis:"", fav:false };
+    it = it || { name:"", url:"", cat:"entry", repo:"", vis:"", fav:false, date:"", dateApprox:false };
 
     closeSheet();
     scrim = document.createElement("div");
@@ -440,9 +471,14 @@
         '<div class="f"><label for="s-url">URL</label>' +
           '<input id="s-url" type="url" inputmode="url" autocapitalize="off" spellcheck="false" value="' + esc(it.url) + '" placeholder="https://…">' +
           '<span class="hint">スマホから開ける公開URLを入れます。空欄のままでも登録できます。</span></div>' +
+        '<div class="f"><label for="s-date">大会の日付</label>' +
+          '<input id="s-date" type="date" value="' + esc(it.date) + '">' +
+          '<span class="hint">新しい大会ほど上に並びます。空欄にすると一番下になります。' +
+          (it.dateApprox ? '<br>いまは「頃」付き（アプリの更新日からの推定）です。正しい日付を入れると「頃」が消えます。' : '') +
+          '</span></div>' +
         '<div class="f"><label for="s-cat">カテゴリ</label><select id="s-cat">' +
           CATS.map(function(c){
-            return '<option value="' + c[0] + '"' + ((it.cat || "other") === c[0] ? " selected" : "") + '>' + esc(c[1]) + '</option>';
+            return '<option value="' + c[0] + '"' + (normCat(it.cat) === c[0] ? " selected" : "") + '>' + esc(c[1]) + '</option>';
           }).join("") +
         '</select></div>' +
         '<div class="f"><label for="s-repo">メモ / リポジトリ名</label>' +
@@ -461,13 +497,17 @@
     scrim.querySelector("#s-save").addEventListener("click", async function(){
       var name = scrim.querySelector("#s-name").value.trim();
       if(!name){ toast("名前を入力してください"); return; }
+      var date = scrim.querySelector("#s-date").value.trim();
       var data = {
         name: name,
         url: scrim.querySelector("#s-url").value.trim(),
         cat: scrim.querySelector("#s-cat").value,
         repo: scrim.querySelector("#s-repo").value.trim(),
         vis: it.vis,
-        fav: !!it.fav
+        fav: !!it.fav,
+        date: date,
+        /* 手で入れ直した日付は確定扱い（「頃」を外す） */
+        dateApprox: !!it.dateApprox && date === String(it.date || "")
       };
       try{ await saveItem(id, data); closeSheet(); toast(isNew ? "追加しました" : "保存しました"); }
       catch(e){}
@@ -524,7 +564,8 @@
           var o = d.data() || {};
           return {
             id: d.id, name: o.name, url: o.url, cat: o.cat,
-            repo: o.repo, vis: o.vis, fav: !!o.fav
+            repo: o.repo, vis: o.vis, fav: !!o.fav,
+            date: o.date || "", dateApprox: !!o.dateApprox
           };
         });
         ready = true;
