@@ -64,6 +64,18 @@ Income rows use `type:"income"` with `salary` / `side` / `allowance` /
 Before assigning, check `settings/categories` for `customCategories` the user
 added and `hiddenCategoryIds` they turned off — do not assign a hidden one.
 
+Custom categories in use:
+
+| id | label | for |
+|---|---|---|
+| `custom_car7a1f3` | 🚗 カー用品 | engine oil, 廃油処理箱, petrol, tyres, 車検 — the user's own car |
+
+`build_batch.py` rejects an id it does not know, so pass it:
+`--extra-categories custom_car7a1f3`. To add another, append an entry
+`{id, label, icon, light, dark, type}` to `customCategories` and write the whole
+`settings/categories` doc back; the app picks it up through `onSnapshot`, and
+`light`/`dark` take the same hex from the app's own ten-swatch palette.
+
 ## Reading rules
 
 These come from real receipts that were misread before. Follow them exactly.
@@ -156,6 +168,7 @@ settle these cases.**
 - コンボ / シーバ / モンプチ / いなば / ちゅ〜る / 猫砂 / ペットシーツ → `pet`
 - 洗剤 / シャンプー / ティッシュ / 電池 / クリップ / 鏡 → `daily`
 - 薬 / 絆創膏 / マスク / サプリ / 湿布 → `medical`
+- エンジンオイル / 廃油 / ワイパー / 洗車 / タイヤ / ガソリン → `custom_car7a1f3`
 - everything else edible → `food`
 
 **When the name is unreadable and nothing identifies it, use `food`** — even on
@@ -163,6 +176,14 @@ a 10% line. The user's standing instruction: 「私も分からないけど、�
 といて」. Reserve `other` for items you *can* identify as non-food but that fit
 no category. Say in your report which items landed in `food` this way, so the
 user can correct them in the app.
+
+A 10% line whose name you cannot place is worth one question before it lands in
+`food` by the fallback, because the fallback is for unreadable names, not for
+readable ones you happen not to recognise. `ファストロン O ¥3,980` and
+`オイルハンター ¥268` (ニシムタ 2026-09-21) went to `daily` on a guess; they were
+engine oil and a 廃油処理箱, and the user asked for a カー用品 category. ¥4,673
+sat in the wrong line until they said so — ask when a single unknown is large
+enough to bend a category total.
 
 The tax mark still decides anything you *can* name — an unmarked コンボ or 氷結
 is pet food or alcohol, not food. This fallback is only for genuine unknowns,
