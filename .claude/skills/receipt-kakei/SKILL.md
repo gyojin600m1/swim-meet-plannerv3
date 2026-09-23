@@ -112,6 +112,24 @@ weights are different rows and stay apart.
 > ダイレックス谷山中央店 2026-09-15: `アミノバイタルゼリー ¥118` ×10 →
 > one row, `アミノバイタルゼリー ×10`, **¥1,180**. 20 items became 10 rows.
 
+A dense discount receipt can print the **same product name on two separate
+lines** — each its own scan, own 30%-off line, own subtotal — and it is easy to
+mistake the second for a stray fragment of the first. ダイレックス谷山中央店
+2026-09-23 rang up シフォーネプレーン twice: `¥108(割引30%)33- @75×2品 ¥150`
+then, right after, a second `¥108(割引30%)33-` with no `×N品` suffix — a lone
+third unit at ¥75, easy to misread as noise. Three purchases, two register
+lines. The tax bands caught it: 2 units priced the food line ¥75 short of the
+printed `8%対象額`, and the missing yen was exactly one more シフォーネプレーン.
+When a name repeats with no visible total, price it as one more unit rather
+than dropping it — the bands will confirm or refute the guess either way.
+
+Two other lines on that receipt looked like one: `ハーバルFオレンジ` sat directly
+above `h&sモイシャ特大 ¥499` with no yen of its own, reading like a wrapped
+product name (`h&s ハーバルフレッシュオレンジ モイシャ特大`). It was a separate
+¥108 line — the `10%対象額 ¥607` only works as 108+499, never as 499 alone.
+Two visually-joined lines are one product only when the combined price matches
+a printed band; otherwise price them separately and let the bands decide.
+
 **4. Skip the footer.** 小計 / 合計 / 外税額 / 内消費税 / 買上点数 / お預り /
 お釣り / クレジット / card numbers / 登録番号 / 電話番号 are never items.
 
