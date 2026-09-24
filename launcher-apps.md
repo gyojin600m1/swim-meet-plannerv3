@@ -13,6 +13,7 @@
 | 2026-09-20 頃 | エントリー | 日本選手権(25m) 2026 エントリー | `japan-champs-25m-2026-swim-entry` | https://claude.ai/artifact/XN8jBtR28yxQq4b9Bs3aKM |
 | 2026-09-20 頃 | 結果 | 県中学総体 結果検索 | `kagoshima-jh-swim-results` | https://claude.ai/artifact/NisY8cqPNs3UFCgZRNUuUH |
 | 2026-09-20 頃 | 当日 | 大会当日プラン | `swim-meet-plannerv3` | https://claude.ai/artifact/KmqnfH2iAauahGenPzxhDi |
+| 2026-09-19 | エントリー | ジャパンパラ 2026 エントリー | `japanpara-2026-swim-entry` | https://claude.ai/artifact/Eavh69y11xtKdPyVZhFHBb |
 | 2026-09-15 頃 | エントリー | 九州ジュニア 2026 エントリー | `kyushu-jr-2026-swim-entry` | https://claude.ai/artifact/BE7UofLVEbvD56ixrVLibZ |
 | 2026-09-13 | エントリー | 第33回 小学生学年別選手権 エントリー | `kagoshima-gakunenbetsu-2026-entry` | https://claude.ai/artifact/MWBafmSuAwmbiRuvEHUT96 |
 | 2026-09-13 頃 | チェッカー | 資格級チェッカー | `swim-qualification-checker` | https://claude.ai/artifact/DfEfNBCqr2HG5v9E7V4o98 |
@@ -23,7 +24,6 @@
 | 2026-09-09 頃 | チェッカー | 標準記録チェッカー | `swim-standard-checker` | https://claude.ai/artifact/ULNfuxCCD5on26xWWo9zvk |
 | 2026-09-06 | エントリー | 第61回 中学校秋季学年別 エントリー | `kagoshima-jh-autumn-gakunenbetsu-entry` | https://claude.ai/artifact/QRoS387QnQ1E5HnEqtSJNT |
 | 2026-09-03 | エントリー | 第102回インカレ 速報・エントリー | `intercollege-2026-entry` | https://claude.ai/artifact/U63txsVq1D42QhbaxgrRxZ |
-| 2026-09-02 頃 | エントリー | ジャパンパラ 2026 エントリー | `japanpara-2026-swim-entry` | https://claude.ai/artifact/Eavh69y11xtKdPyVZhFHBb |
 | 2026-09-02 頃 | その他 | 水泳Q&Aコミュニティ | `swim-qa-community` | https://gyojin600m1.github.io/swim-qa-community/ |
 | 2026-08-29 | エントリー | 日本スポーツマスターズ2026 エントリー | `jsm2026-swim-entry` | https://claude.ai/artifact/9kyLvFnV9HoFqu3ixHv25b |
 | 2026-08-29 | エントリー | 第34回 県高校新人 エントリー | `kagoshima-hs-shinjin-entry` | https://claude.ai/artifact/SBnz9hMTjzQs93PNbgYCtx |
