@@ -22,6 +22,9 @@ pre-tax `amount` (already net of any 割引), plus the printed band totals:
 
 Output is the ordinary receipts format (tax-inclusive `amount`, no `rate`),
 ready for build_batch.py. Exits non-zero if the bands do not reconcile.
+
+Standalone: Python 3 standard library only (json/sys/collections), no network
+calls, no Claude/Anthropic dependency. Safe to run from any machine or CI.
 """
 
 import json

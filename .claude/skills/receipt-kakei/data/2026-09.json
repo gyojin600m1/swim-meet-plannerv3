@@ -1,0 +1,2861 @@
+{
+  "app": "パシャ家計",
+  "month": "2026-09",
+  "generated_at": "2026-10-03",
+  "currency": "JPY",
+  "category_labels": {
+    "food": "食料品",
+    "daily": "日用品",
+    "clothing": "衣服",
+    "beauty": "美容",
+    "social": "交際費",
+    "medical": "医療費",
+    "education": "教育費",
+    "utility": "光熱費",
+    "transport": "交通費",
+    "communication": "通信費",
+    "housing": "住居費",
+    "hobby": "趣味・娯楽",
+    "alcohol": "酒・アルコール",
+    "pet": "ペット用品",
+    "other": "その他",
+    "custom_car7a1f3": "カー用品"
+  },
+  "days": [
+    {
+      "date": "2026-09-01",
+      "receipt_count": 1,
+      "day_total": 2192,
+      "receipts": [
+        {
+          "receiptId": "rcpt-20260904-4",
+          "store": "タイヨー小松原店",
+          "total": 2192,
+          "item_count": 16,
+          "items": [
+            {
+              "memo": "ファンタ",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "つぶあんぱん",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チロルチョコ 3個",
+              "amount": 162,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ブラックサンダー 3個",
+              "amount": 123,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめらか水よう(30%引)",
+              "amount": 89,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "森永あじわい",
+              "amount": 203,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジの南蛮漬け(50%引)",
+              "amount": 161,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "-196 無糖",
+              "amount": 129,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "国産塩さば切身(20%引)",
+              "amount": 255,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "あずきバーミルク",
+              "amount": 63,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チョコバット 3個",
+              "amount": 123,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チョコモナカジャンボ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "あずきバー",
+              "amount": 63,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パピコチョコ",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミニトマト",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "コカコーラ 2本(値引後)",
+              "amount": 205,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-02",
+      "receipt_count": 1,
+      "day_total": 3021,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609023021",
+          "store": "タイヨー慈眼寺店",
+          "total": 3021,
+          "item_count": 15,
+          "items": [
+            {
+              "memo": "りんご乳酸菌7",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "タカノフーズお",
+              "amount": 116,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "大きな塩デニ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身(甘",
+              "amount": 275,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "鹿児島市岡之原",
+              "amount": 110,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "くばら キャベ",
+              "amount": 289,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "千切りキャベツ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "鹿児島市岡之原",
+              "amount": 187,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポッキーカ",
+              "amount": 145,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "豚トロレモンペ",
+              "amount": 257,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジツケメカブ(2",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "大きなメロン",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆牛豚合挽ミン",
+              "amount": 771,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-03",
+      "receipt_count": 1,
+      "day_total": 4737,
+      "receipts": [
+        {
+          "receiptId": "rcpt-20260904-3",
+          "store": "ダイレックス谷山中矢店",
+          "total": 4737,
+          "item_count": 14,
+          "items": [
+            {
+              "memo": "おいしいあんぱん",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "一品香 讃岐うどん",
+              "amount": 258,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "西日本食品 片栗粉400",
+              "amount": 199,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ハウス おろし生わさび徳",
+              "amount": 198,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "コンボD もっちりチキン ×3",
+              "amount": 2037,
+              "category": "pet",
+              "category_label": "ペット用品",
+              "qty": 3,
+              "unitAmount": 679
+            },
+            {
+              "memo": "リスカ スーパービッグC ×2",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 69
+            },
+            {
+              "memo": "果汁グミぶどう",
+              "amount": 129,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "児湯 チキンナゲット",
+              "amount": 548,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ハウス 特選和からし",
+              "amount": 118,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "氷結 無糖レモン",
+              "amount": 129,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "熟成バターロール",
+              "amount": 118,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "玉ねぎ",
+              "amount": 214,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレンジ",
+              "amount": 118,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "さらさらキャノーラ油",
+              "amount": 438,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-04",
+      "receipt_count": 2,
+      "day_total": 6208,
+      "receipts": [
+        {
+          "receiptId": "rcpt-20260904-1",
+          "store": "業務スーパー 谷山店",
+          "total": 5080,
+          "item_count": 27,
+          "items": [
+            {
+              "memo": "ベルギーチョコ蒸",
+              "amount": 113,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チューハイ無糖 3本",
+              "amount": 290,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "みどり低脂肪",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "クーリッシュ 2個",
+              "amount": 212,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "大根1/2(20%引)",
+              "amount": 127,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ラグジュアリッチコーヒー豆",
+              "amount": 885,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "生椎茸",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "赤城セルフチョコ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "3角厚揚げ",
+              "amount": 107,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "バナナ",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パクパクチキン",
+              "amount": 538,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国内製造 韓国の",
+              "amount": 113,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "スイートラスク",
+              "amount": 81,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ロイヤルブレッド",
+              "amount": 171,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "鶏白湯しょうゆ鍋",
+              "amount": 99,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ガリガリ君ソーダ 2個",
+              "amount": 108,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "群馬県産 ジャン",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "佐藤食品 オレン",
+              "amount": 289,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ブルボン チョコ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏手羽もと",
+              "amount": 417,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "2色パン(栗入りつぶ)",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "やわらか卵のシフ",
+              "amount": 127,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "めん食 えむすび",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "リスカ しっとり",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "赤城セルフクラッ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "にがり厚揚げ",
+              "amount": 107,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "油揚げ",
+              "amount": 107,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-20260904-2",
+          "store": "タイヨー春山店",
+          "total": 1128,
+          "item_count": 9,
+          "items": [
+            {
+              "memo": "国産豚レバー(50%引)",
+              "amount": 215,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "きんつば(50%引)",
+              "amount": 64,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "小豆羹(50%引)",
+              "amount": 75,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ハンドミラー",
+              "amount": 110,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "天然水",
+              "amount": 73,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産塩さば切身(20%引)",
+              "amount": 256,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "こっぺ イチゴ(50%引)",
+              "amount": 64,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ダブルクリップ",
+              "amount": 110,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "アジの南蛮漬け(50%引)",
+              "amount": 161,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-05",
+      "receipt_count": 1,
+      "day_total": 4664,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609054664",
+          "store": "タイヨー小松原店",
+          "total": 4664,
+          "item_count": 24,
+          "items": [
+            {
+              "memo": "森永あじわ 特",
+              "amount": 406,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "お芋のケーキ(",
+              "amount": 182,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "太陽の和み白た",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "太陽の和み赤た",
+              "amount": 332,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身(甘",
+              "amount": 284,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめらか絹と 特",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "りんご乳酸菌7",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ブラックサンダ",
+              "amount": 164,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミニサラダ 特",
+              "amount": 116,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "苺のショートケ",
+              "amount": 188,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "朝のフレッ 特",
+              "amount": 235,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ピーマン(袋入",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミニサラダ 特",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトフライフ",
+              "amount": 188,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "T.つぶあんぱ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "タカノフーズお",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミニサラダ",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめこ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "スターバックス",
+              "amount": 134,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チロルチョコミ",
+              "amount": 162,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "糖質0サラダチ",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "サンゴールドキ",
+              "amount": 313,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏モモ唐",
+              "amount": 254,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-06",
+      "receipt_count": 1,
+      "day_total": 2630,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609062630",
+          "store": "タイヨー小松原店",
+          "total": 2630,
+          "item_count": 14,
+          "items": [
+            {
+              "memo": "あずきバー",
+              "amount": 63,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "T.つぶあんぱ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "かつおの腹皮",
+              "amount": 205,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジツケメカブ(2コグ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いアッ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チロルチョコミ",
+              "amount": 108,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "レジ袋 中 乳白",
+              "amount": 4,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "太陽の和み白た",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アップルパイ",
+              "amount": 127,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "森永あじわ 特",
+              "amount": 203,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ファミリアバニ",
+              "amount": 926,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトフライフ",
+              "amount": 125,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "あずきバーミル",
+              "amount": 63,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ブラックサンダ",
+              "amount": 123,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-07",
+      "receipt_count": 1,
+      "day_total": 5846,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609075846",
+          "store": "業務スーパー 谷山店",
+          "total": 5846,
+          "item_count": 24,
+          "items": [
+            {
+              "memo": "バターピーナッツ",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産豚モモ切り落",
+              "amount": 842,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミニクロワッサン",
+              "amount": 171,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "牛豚合挽ミンチ",
+              "amount": 381,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ドデカチップス",
+              "amount": 84,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏 もも肉",
+              "amount": 753,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チョコモナカジャ",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "カルビー ピザポ",
+              "amount": 135,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "エビマヨおにぎり",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "スナックサンド",
+              "amount": 127,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトサラダ",
+              "amount": 419,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "三幸 越後樽焼",
+              "amount": 92,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "きゅうり",
+              "amount": 152,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "マルキンマフィン",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "じゃがいも徳用",
+              "amount": 214,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "レジ袋N050",
+              "amount": 8,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "広島協同乳業 大",
+              "amount": 192,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "辛ラーメン キム",
+              "amount": 333,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チョコチップク",
+              "amount": 89,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チューハイ 無糖",
+              "amount": 97,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "パピコ チョココ",
+              "amount": 127,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "サントリーVO 640ml",
+              "amount": 956,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "ランチパック(プ",
+              "amount": 58,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ロースハム4連",
+              "amount": 192,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-09",
+      "receipt_count": 2,
+      "day_total": 7567,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609094610",
+          "store": "ダイレックス谷山中央店",
+          "total": 4610,
+          "item_count": 12,
+          "items": [
+            {
+              "memo": "ミニクロワッサン9",
+              "amount": 168,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "196無糖ダブルレモン ×3",
+              "amount": 345,
+              "category": "alcohol",
+              "category_label": "酒・アルコール",
+              "qty": 3,
+              "unitAmount": 115
+            },
+            {
+              "memo": "銀サケ（甘口）",
+              "amount": 174,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "システマC4列",
+              "amount": 179,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "お徳用楊枝#2025",
+              "amount": 118,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "草原のまごころ<乳飲料> ×2",
+              "amount": 378,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 189
+            },
+            {
+              "memo": "ダヴB キンモクセイ詰替",
+              "amount": 419,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "新鰹だしの素",
+              "amount": 349,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "くだもの",
+              "amount": 430,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チキンナゲット",
+              "amount": 258,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "イーナトイレットS",
+              "amount": 839,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "国産若鶏むね身",
+              "amount": 953,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609092957",
+          "store": "タイヨー慈眼寺店",
+          "total": 2957,
+          "item_count": 14,
+          "items": [
+            {
+              "memo": "太陽の和み白た",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身(甘",
+              "amount": 266,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめらか絹と 特",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめこ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "生みそやまぶき",
+              "amount": 624,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "おいしいって幸",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "T.いつもの食",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "鹿児島市岡之原",
+              "amount": 187,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆国産豚肉小間",
+              "amount": 357,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "大阿蘇牛乳入り",
+              "amount": 116,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "玉ねぎ",
+              "amount": 214,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジツケメカブ(2",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "エビマヨおにぎ",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-11",
+      "receipt_count": 2,
+      "day_total": 8027,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609113689",
+          "store": "タイヨー小松原店",
+          "total": 3689,
+          "item_count": 13,
+          "items": [
+            {
+              "memo": "板チョコクロワ",
+              "amount": 85,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "3種の豆のミニ",
+              "amount": 86,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "氷結無 M001特",
+              "amount": 394,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "森永あじわ 特",
+              "amount": 406,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身（甘",
+              "amount": 253,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ファミリアバニ",
+              "amount": 926,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "レジ袋 中 乳白",
+              "amount": 4,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "太陽の和み白た",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "じゃがりこ 特",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "たっぷりつぶあ",
+              "amount": 102,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏モモ肉",
+              "amount": 653,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "りんご乳酸菌",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609114338",
+          "store": "ダイレックス谷山甲突店",
+          "total": 4338,
+          "item_count": 6,
+          "items": [
+            {
+              "memo": "宮崎県産こしひかり",
+              "amount": 2790,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "北海道チーズケーキ",
+              "amount": 108,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "大根ミックスサラダ",
+              "amount": 118,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏むね身",
+              "amount": 293,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "（味付）豚タン",
+              "amount": 280,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "エッセンシャルリペSP替",
+              "amount": 749,
+              "category": "daily",
+              "category_label": "日用品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-13",
+      "receipt_count": 1,
+      "day_total": 7428,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609137428",
+          "store": "業務スーパー 谷山店",
+          "total": 7428,
+          "item_count": 19,
+          "items": [
+            {
+              "memo": "人参",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "牛やわらかサイコ",
+              "amount": 786,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "しっとりスイートドーム",
+              "amount": 108,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チキンナゲット(",
+              "amount": 354,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チューハイ 無糖",
+              "amount": 290,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "タイでつくった美",
+              "amount": 999,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "佐藤食品 アップ",
+              "amount": 192,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "牛やわらか焼肉",
+              "amount": 786,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "三幸 越後樽焼",
+              "amount": 92,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "レジ袋N050",
+              "amount": 8,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "きゅうり1本",
+              "amount": 87,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏ムネ肉2",
+              "amount": 549,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産若鶏モモ肉",
+              "amount": 1062,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ロッテブラックブ",
+              "amount": 538,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトチップス厚切り",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "牛豚合挽ミンチ",
+              "amount": 974,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトチップス厚",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレン",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "雲仙きのこ 生な",
+              "amount": 147,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-14",
+      "receipt_count": 3,
+      "day_total": 5664,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609142006",
+          "store": "ダイレックス谷山中央店",
+          "total": 2006,
+          "item_count": 10,
+          "items": [
+            {
+              "memo": "h&sモイコンデ特大",
+              "amount": 499,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "銀サケ（甘口）",
+              "amount": 241,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "銀サケ（甘口）",
+              "amount": 280,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "お芋でどうぞ",
+              "amount": 80,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "味付めかぶぶっかけタイ",
+              "amount": 128,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "RYスペシャルブレッド",
+              "amount": 108,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレンジ",
+              "amount": 128,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アップルジュース",
+              "amount": 198,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "抹茶と小豆のツイスト",
+              "amount": 124,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "北海道バターチョコチッ ×2",
+              "amount": 220,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 110
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609141810",
+          "store": "南日本薬剤センター薬局",
+          "total": 1810,
+          "item_count": 1,
+          "items": [
+            {
+              "memo": "調剤報酬",
+              "amount": 1810,
+              "category": "medical",
+              "category_label": "医療費"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609141848",
+          "store": "しまむら谷山店",
+          "total": 1848,
+          "item_count": 2,
+          "items": [
+            {
+              "memo": "テブクロ",
+              "amount": 550,
+              "category": "clothing",
+              "category_label": "衣服"
+            },
+            {
+              "memo": "インナー ×2",
+              "amount": 1298,
+              "category": "clothing",
+              "category_label": "衣服",
+              "qty": 2,
+              "unitAmount": 649
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-15",
+      "receipt_count": 2,
+      "day_total": 4338,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609152684",
+          "store": "ダイレックス谷山中央店",
+          "total": 2684,
+          "item_count": 10,
+          "items": [
+            {
+              "memo": "ハウス 七味唐辛子 袋",
+              "amount": 108,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ヤマザキ アップルパイ",
+              "amount": 97,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アミノバイタルゼリー ×10",
+              "amount": 1180,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 10,
+              "unitAmount": 118
+            },
+            {
+              "memo": "控えめシューカスタード ×2",
+              "amount": 174,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 87
+            },
+            {
+              "memo": "深ねぎ",
+              "amount": 214,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "日本食品",
+              "amount": 320,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ロッテ 生チョコパイ",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "RY あんドーナッツ",
+              "amount": 94,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ホワイトDショコラ",
+              "amount": 101,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "玉ねぎ",
+              "amount": 279,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609151654",
+          "store": "タイヨー小松原店",
+          "total": 1654,
+          "item_count": 8,
+          "items": [
+            {
+              "memo": "☆銀鮭切身(甘",
+              "amount": 298,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "森永あじわ 特",
+              "amount": 406,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "太陽の和 M001",
+              "amount": 289,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "りんご乳酸菌",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "全粒粉入りソフ",
+              "amount": 134,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめらか絹と 特",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ふんわり食パン",
+              "amount": 112,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-17",
+      "receipt_count": 1,
+      "day_total": 3197,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609173197",
+          "store": "タイヨー小松原店",
+          "total": 3197,
+          "item_count": 14,
+          "items": [
+            {
+              "memo": "りんご乳酸菌",
+              "amount": 320,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "氷結無 M001特",
+              "amount": 393,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "九州屋もめん",
+              "amount": 63,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "プリンアラモー",
+              "amount": 139,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "タカノフーズお",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "いつも新鮮 特",
+              "amount": 235,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめらか絹と 特",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "太陽の和 M002",
+              "amount": 289,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "なめこ",
+              "amount": 212,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身(甘",
+              "amount": 298,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "バナ勝バナナ",
+              "amount": 192,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "森永あじわ 特",
+              "amount": 406,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "バター仕立ての",
+              "amount": 289,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-18",
+      "receipt_count": 2,
+      "day_total": 4018,
+      "receipts": [
+        {
+          "receiptId": "rcpt-20260918761",
+          "store": "タイヨー小松原店",
+          "total": 761,
+          "item_count": 5,
+          "items": [
+            {
+              "memo": "精肉用)薩摩も",
+              "amount": 171,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ふんわり食パン",
+              "amount": 112,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆特売)国産豚",
+              "amount": 193,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトフライフ",
+              "amount": 125,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609183257",
+          "store": "ダイレックス谷山中央店",
+          "total": 3257,
+          "item_count": 17,
+          "items": [
+            {
+              "memo": "ホワイトDショコラ ×2",
+              "amount": 202,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 101
+            },
+            {
+              "memo": "フマキラーA450ml",
+              "amount": 379,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "Tフレンチクルーラー",
+              "amount": 89,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いアップル",
+              "amount": 128,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "北海道さけるプレーン ×2",
+              "amount": 356,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 178
+            },
+            {
+              "memo": "レジ袋大",
+              "amount": 3,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "絹とうふ",
+              "amount": 88,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ダブルクリームシュー ×2",
+              "amount": 122,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 61
+            },
+            {
+              "memo": "おかめ仕立てミニ3",
+              "amount": 99,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレンジ",
+              "amount": 128,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "とろけるカレー 甘口",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "小玉ミックス10個",
+              "amount": 268,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "玉ねぎ",
+              "amount": 279,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "銀サケ（甘口）",
+              "amount": 291,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "あじわい便り ×2",
+              "amount": 396,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 198
+            },
+            {
+              "memo": "1Pもちもちロール",
+              "amount": 82,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "日本ハム ローストサラ",
+              "amount": 198,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-19",
+      "receipt_count": 2,
+      "day_total": 6032,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609194173",
+          "store": "ニシムタ伊集院店",
+          "total": 4173,
+          "item_count": 5,
+          "items": [
+            {
+              "memo": "紅茶花伝ロイヤルミ",
+              "amount": 128,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "鹿児島で獲れたお",
+              "amount": 2246,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "北海道シチュークリ",
+              "amount": 365,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アミノVガッ 特 ×10",
+              "amount": 1166,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "KKコンソメ固形2",
+              "amount": 268,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609191859",
+          "store": "タイヨー小松原店",
+          "total": 1859,
+          "item_count": 7,
+          "items": [
+            {
+              "memo": "レジ袋 中 乳白",
+              "amount": 4,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "☆銀鮭切身（甘",
+              "amount": 278,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "５５ｇポテ 特",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アサヒ M001特 ×3",
+              "amount": 768,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "氷結無 M002特 ×3",
+              "amount": 394,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "バナ勝バナナ",
+              "amount": 192,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ブロッコリー新",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-20",
+      "receipt_count": 2,
+      "day_total": 2980,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609202250",
+          "store": "タイヨー小松原店",
+          "total": 2250,
+          "item_count": 11,
+          "items": [
+            {
+              "memo": "特売)国産若鶏",
+              "amount": 198,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "味の素 特 ×2",
+              "amount": 427,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジシオ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身（甘",
+              "amount": 289,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "５３ｇポテ 特",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミミまでやわら",
+              "amount": 112,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆国産豚肉小間",
+              "amount": 180,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆牛豚合挽ミン",
+              "amount": 287,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジツケメカブ(2コグ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "いちごつみ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "太陽の和み白た",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-20260920730",
+          "store": "タイヨー小松原店",
+          "total": 730,
+          "item_count": 2,
+          "items": [
+            {
+              "memo": "五郎家鹿児 特",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "うまかっち 特",
+              "amount": 408,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-21",
+      "receipt_count": 3,
+      "day_total": 9640,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609214520",
+          "store": "業務スーパー 谷山店",
+          "total": 4520,
+          "item_count": 15,
+          "items": [
+            {
+              "memo": "きゅうり１本",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "片栗粉",
+              "amount": 386,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "雲仙きのこ 生な",
+              "amount": 84,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "カルビー クリス",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "南瓜カット",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレン",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "カルビー じゃが",
+              "amount": 127,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "国産豚肉切り落と",
+              "amount": 918,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ラグジュアリッチコーヒー豆",
+              "amount": 885,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ポテトサラダ",
+              "amount": 419,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いアップ",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "玉ねぎL３個",
+              "amount": 171,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ファミリア バニ",
+              "amount": 700,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "チューハイ 無糖",
+              "amount": 97,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "キリン氷結レモン",
+              "amount": 127,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-20260921447",
+          "store": "ニシムタ伊集院店",
+          "total": 447,
+          "item_count": 3,
+          "items": [
+            {
+              "memo": "ストロベリージャム",
+              "amount": 214,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ふわり食パン",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "おいしいあんぱん 特",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609214673",
+          "store": "ニシムタ伊集院店",
+          "total": 4673,
+          "item_count": 2,
+          "items": [
+            {
+              "memo": "ファストロン O",
+              "amount": 4378,
+              "category": "custom_car7a1f3",
+              "category_label": "カー用品"
+            },
+            {
+              "memo": "オイルハンター",
+              "amount": 295,
+              "category": "custom_car7a1f3",
+              "category_label": "カー用品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-22",
+      "receipt_count": 2,
+      "day_total": 7168,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609224700",
+          "store": "ダイレックス谷山中央店",
+          "total": 4700,
+          "item_count": 10,
+          "items": [
+            {
+              "memo": "コーヒーサンド",
+              "amount": 135,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "スフレサンド",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "宮崎県産こしひかり",
+              "amount": 2790,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ウェルファムWF鶏もも",
+              "amount": 780,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "にんじん",
+              "amount": 214,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "あじわい便り",
+              "amount": 198,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ミニチョコクロワッサン",
+              "amount": 117,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ダブルクリームシュー",
+              "amount": 61,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ホワイトDショコラ",
+              "amount": 101,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "カスタードプリン4P",
+              "amount": 166,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609222468",
+          "store": "タイヨー慈眼寺店",
+          "total": 2468,
+          "item_count": 5,
+          "items": [
+            {
+              "memo": "ビッグサンド",
+              "amount": 75,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "鹿児島市岡之原 ×2",
+              "amount": 374,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "有機栽培バナナ",
+              "amount": 224,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身（甘",
+              "amount": 277,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "グランデリソ",
+              "amount": 1518,
+              "category": "pet",
+              "category_label": "ペット用品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-23",
+      "receipt_count": 3,
+      "day_total": 6556,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609232454",
+          "store": "ダイレックス谷山中央店",
+          "total": 2454,
+          "item_count": 4,
+          "items": [
+            {
+              "memo": "イーナソフト150W",
+              "amount": 588,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "無添加のおいしいワイン赤",
+              "amount": 878,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "イーナトイレットS",
+              "amount": 839,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609232111",
+          "store": "ダイレックス谷山中央店",
+          "total": 2111,
+          "item_count": 11,
+          "items": [
+            {
+              "memo": "ホワイトDショコラ ×3",
+              "amount": 303,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 3,
+              "unitAmount": 101
+            },
+            {
+              "memo": "ヤマザキ アップルパイ",
+              "amount": 97,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "シフォーネプレーン ×3",
+              "amount": 225,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 3,
+              "unitAmount": 75
+            },
+            {
+              "memo": "ランチパックチョコレー",
+              "amount": 89,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレンジ",
+              "amount": 128,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "カットレタス",
+              "amount": 82,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "h&sモイシャ特大",
+              "amount": 499,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "銀サケ（甘口）",
+              "amount": 306,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "クリームたっぷり甘納豆 ×2",
+              "amount": 178,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 89
+            },
+            {
+              "memo": "スイートブレッド（5）",
+              "amount": 96,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ハーバルFオレンジ",
+              "amount": 108,
+              "category": "daily",
+              "category_label": "日用品"
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609231991",
+          "store": "タイヨー小松原店",
+          "total": 1991,
+          "item_count": 9,
+          "items": [
+            {
+              "memo": "太陽の和み白た",
+              "amount": 322,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身（甘",
+              "amount": 205,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "生クリームロー",
+              "amount": 247,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "S・S和風ミッ",
+              "amount": 64,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "コカ・ M001特 ×3",
+              "amount": 279,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "濃厚ダブルチー",
+              "amount": 255,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "フルーツシャル",
+              "amount": 141,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "さっくりサトち",
+              "amount": 85,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "氷結無 M002特 ×3",
+              "amount": 393,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-25",
+      "receipt_count": 2,
+      "day_total": 4175,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609251729",
+          "store": "ダイレックス谷山中央店",
+          "total": 1729,
+          "item_count": 10,
+          "items": [
+            {
+              "memo": "キシリガムライム ボト",
+              "amount": 399,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "塩バタークロワッサン",
+              "amount": 118,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "天長 ウエハースコロコロ",
+              "amount": 99,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ペコポコチョコレート",
+              "amount": 139,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "北海道チーズケーキ",
+              "amount": 96,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "やわらか卵シフォンケー",
+              "amount": 97,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "ホワイトDショコラ ×2",
+              "amount": 202,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 101
+            },
+            {
+              "memo": "牛豚合挽ミンチ",
+              "amount": 291,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "リスカ スーパービッグC ×2",
+              "amount": 138,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 69
+            },
+            {
+              "memo": "特選メロンパン ×2",
+              "amount": 150,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 75
+            }
+          ]
+        },
+        {
+          "receiptId": "rcpt-202609252446",
+          "store": "タイヨー小松原店",
+          "total": 2446,
+          "item_count": 14,
+          "items": [
+            {
+              "memo": "レジ袋 中 乳白",
+              "amount": 4,
+              "category": "daily",
+              "category_label": "日用品"
+            },
+            {
+              "memo": "なめこ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "森永あじわ 特 ×2",
+              "amount": 406,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "パッカルゴール",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "くるりんチョコ",
+              "amount": 85,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "りんご乳酸菌",
+              "amount": 160,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "☆銀鮭切身（甘",
+              "amount": 242,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "TA.コーヒー",
+              "amount": 69,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "太陽の和み白た",
+              "amount": 321,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "氷結無 M001特 ×3",
+              "amount": 394,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "なめらか絹と 特",
+              "amount": 95,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "アジツケメカブ(2コグ",
+              "amount": 106,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いオレ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            },
+            {
+              "memo": "家族の潤いアッ",
+              "amount": 149,
+              "category": "food",
+              "category_label": "食料品"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "date": "2026-09-29",
+      "receipt_count": 1,
+      "day_total": 1440,
+      "receipts": [
+        {
+          "receiptId": "rcpt-202609291440",
+          "store": "ダイレックス谷山中央店",
+          "total": 1440,
+          "item_count": 4,
+          "items": [
+            {
+              "memo": "無添加のおいしいワイン赤",
+              "amount": 878,
+              "category": "alcohol",
+              "category_label": "酒・アルコール"
+            },
+            {
+              "memo": "ロッテ 生チョコパイ ×2",
+              "amount": 234,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 117
+            },
+            {
+              "memo": "ランチパックチョコレー ×2",
+              "amount": 178,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 89
+            },
+            {
+              "memo": "シフォーネプレーン ×2",
+              "amount": 150,
+              "category": "food",
+              "category_label": "食料品",
+              "qty": 2,
+              "unitAmount": 75
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "summary": {
+    "total_receipts": 36,
+    "total_items": 386,
+    "grand_total": 107528,
+    "by_category": [
+      {
+        "category": "food",
+        "label": "食料品",
+        "amount": 83219
+      },
+      {
+        "category": "alcohol",
+        "label": "酒・アルコール",
+        "amount": 6952
+      },
+      {
+        "category": "daily",
+        "label": "日用品",
+        "amount": 5471
+      },
+      {
+        "category": "custom_car7a1f3",
+        "label": "カー用品",
+        "amount": 4673
+      },
+      {
+        "category": "pet",
+        "label": "ペット用品",
+        "amount": 3555
+      },
+      {
+        "category": "clothing",
+        "label": "衣服",
+        "amount": 1848
+      },
+      {
+        "category": "medical",
+        "label": "医療費",
+        "amount": 1810
+      }
+    ]
+  }
+}

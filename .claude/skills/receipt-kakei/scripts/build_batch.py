@@ -16,6 +16,12 @@ Writes <out-dir>/docs/<doc_id>.json (one document each) and
 <out-dir>/batch_NN.json (batch entries, <=50 per file, ready to paste into the
 Artifact tool's `writes` parameter). Exits non-zero if a receipt's items do not
 sum to its printed total — do not write unbalanced receipts.
+
+Standalone: Python 3 standard library only (argparse/json/os/sys/collections),
+no network calls, no Claude/Anthropic dependency. Safe to run from any machine
+or CI. It only ever produces files on disk — committing them to パシャ家計's
+database is a separate step (see ../HANDOFF.md) that this script does not
+perform.
 """
 
 import argparse
