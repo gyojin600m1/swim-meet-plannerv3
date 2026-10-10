@@ -10,7 +10,7 @@
 | 大会日付 | 種別 | 大会名・アプリ名 | リポジトリ | 開くアドレス |
 |---|---|---|---|---|
 | 2026-09-20 | エントリー | アジア競技大会 2026 エントリー | `asian-games-2026-swim-entry` | https://claude.ai/artifact/KyCpw9JJxKQQE7y91MBewU |
-| 2026-09-20 頃 | エントリー | 日本選手権(25m) 2026 エントリー | `japan-champs-25m-2026-swim-entry` | https://claude.ai/artifact/XN8jBtR28yxQq4b9Bs3aKM |
+| 2026-10-10 | 結果 | 日本選手権(25m) 2026 エントリー・速報 | `japan-champs-25m-2026-swim-entry` | https://claude.ai/artifact/XN8jBtR28yxQq4b9Bs3aKM |
 | 2026-09-20 頃 | 結果 | 県中学総体 結果検索 | `kagoshima-jh-swim-results` | https://claude.ai/artifact/NisY8cqPNs3UFCgZRNUuUH |
 | 2026-09-20 頃 | 当日 | 大会当日プラン | `swim-meet-plannerv3` | https://claude.ai/artifact/KmqnfH2iAauahGenPzxhDi |
 | 2026-09-19 | 結果 | ジャパンパラ 2026 エントリー・結果 | `japanpara-2026-swim-entry` | https://claude.ai/artifact/Eavh69y11xtKdPyVZhFHBb |
